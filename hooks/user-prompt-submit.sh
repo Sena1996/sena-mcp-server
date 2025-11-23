@@ -1,0 +1,205 @@
+#!/bin/bash
+# SENA Controller Enforcement Hook
+# Automatically enforces SENA rules by injecting reminders BEFORE Claude sees the message
+
+# Check if running in Rider IDE mode
+RIDER_MODE="${SENA_IDE_MODE:-}"
+CLEAN_OUTPUT="${SENA_CLEAN_OUTPUT:-false}"
+
+# ============================================================
+# RULE 6: AUTO PROGRESS INJECTION - ENFORCED
+# ============================================================
+# Skip progress injection if in Rider IDE mode (wrapper handles clean output)
+if [ "$RIDER_MODE" != "rider" ]; then
+    # Check if user request involves multi-step operations
+    if echo "$USER_PROMPT" | grep -iE '\b(search|find|scan|check|analyze|all|every|multiple|files|read.*files|write.*files)\b' > /dev/null; then
+        # AUTO-INJECT initial progress bar (visible to user)
+        echo ""
+        echo "┌──────────────────────────────────────────────────────────────┐"
+        echo "│ Processing request  [🦁░░░░░░░░░░░░░░░░░░░] 0% - Starting   │"
+        echo "└──────────────────────────────────────────────────────────────┘"
+        echo ""
+
+        # Also remind Claude to show intermediate progress
+        echo "════════════════════════════════════════════════════════════════"
+        echo "🦁 RULE 6: SHOW INTERMEDIATE PROGRESS"
+        echo "════════════════════════════════════════════════════════════════"
+        echo "As you work through steps, UPDATE the progress bar:"
+        echo "  [█████🦁░░░░░░░░░░░░░░] 25% - Step 1 done"
+        echo "  [██████████🦁░░░░░░░░░] 50% - Step 2 done"
+        echo "  [███████████████🦁░░░░] 75% - Step 3 done"
+        echo "════════════════════════════════════════════════════════════════"
+    fi
+fi
+
+# Read JSON input from stdin
+INPUT=$(cat)
+
+# Extract the prompt field from JSON using Python
+USER_PROMPT=$(echo "$INPUT" | python3 -c "import sys, json; data=json.load(sys.stdin); print(data.get('prompt', ''))")
+
+# ============================================================
+# SENA ALWAYS-ON MODE: Check if persistent SENA mode is enabled
+# ============================================================
+
+if [ -f "$HOME/.claude/.sena_always_on" ]; then
+    cat <<'SENA_ALWAYS_ON'
+
+═══════════════════════════════════════════════════════════════════
+🦁🦁🦁 SENA ALWAYS-ON MODE ACTIVE 🦁🦁🦁
+═══════════════════════════════════════════════════════════════════
+
+🔴🔴🔴 CRITICAL SYSTEM RULE - READ THIS FIRST 🔴🔴🔴
+
+BEFORE you respond to the user's message, you MUST:
+
+1. Start your ENTIRE response with exactly: **SENA 🦁**
+
+   DO NOT skip this. DO NOT forget this. DO NOT ignore this.
+
+   The VERY FIRST LINE of your response must be: **SENA 🦁**
+
+2. After the prefix, provide the actual response content
+
+═══════════════════════════════════════════════════════════════════
+EXAMPLE OF CORRECT RESPONSE:
+═══════════════════════════════════════════════════════════════════
+**SENA 🦁**
+
+[your actual response content here...]
+
+═══════════════════════════════════════════════════════════════════
+THIS IS NON-NEGOTIABLE. SEE CLAUDE.md RULE 0.
+═══════════════════════════════════════════════════════════════════
+
+**Additional SENA requirements:**
+- Tables → Use format_table_as_text()
+- Complex questions → Use think_as_text()
+- Facts → Use verify_fact_as_text()
+
+SENA_ALWAYS_ON
+fi
+
+# ============================================================
+# RULE ENFORCEMENT: Check for SENA trigger words
+# ============================================================
+
+# Check for why/how/explain triggers (RULE 2)
+if echo "$USER_PROMPT" | grep -iE '\b(why|how|explain|what causes|what makes|how come)\b' > /dev/null; then
+    # AUTO-EXECUTE: Generate brilliant thinking format automatically
+    QUESTION=$(echo "$USER_PROMPT" | sed 's/"/\\"/g')
+    echo ""
+    echo "═══════════════════════════════════════════════════════════════════"
+    echo "🔴 RULE 2 AUTO-TRIGGER: Brilliant Thinking Format Applied"
+    echo "═══════════════════════════════════════════════════════════════════"
+    echo ""
+    python3 -c "
+import sys
+sys.path.insert(0, '/Users/sena/.claude/sena_controller_v3.0')
+from sena_auto_format import auto_apply_format
+result = auto_apply_format('$QUESTION')
+if result:
+    print(result)
+"
+    echo ""
+    echo "═══════════════════════════════════════════════════════════════════"
+    echo "Response formatted automatically. You may add additional context."
+    echo "═══════════════════════════════════════════════════════════════════"
+fi
+
+# Check for table triggers (RULE 1)
+if echo "$USER_PROMPT" | grep -iE '\b(table|tabular|tabular format|in table form)\b' > /dev/null; then
+    # AUTO-EXECUTE: Generate table format automatically
+    REQUEST=$(echo "$USER_PROMPT" | sed 's/"/\\"/g')
+    echo ""
+    echo "═══════════════════════════════════════════════════════════════════"
+    echo "🔴 RULE 1 AUTO-TRIGGER: Table Format Applied"
+    echo "═══════════════════════════════════════════════════════════════════"
+    echo ""
+    python3 -c "
+import sys
+sys.path.insert(0, '/Users/sena/.claude/sena_controller_v3.0')
+from sena_auto_format import auto_apply_format
+result = auto_apply_format('$REQUEST')
+if result:
+    print(result)
+"
+    echo ""
+    echo "═══════════════════════════════════════════════════════════════════"
+    echo "Table generated automatically. Add data as needed."
+    echo "═══════════════════════════════════════════════════════════════════"
+fi
+
+# Check for fact verification triggers (RULE 3)
+if echo "$USER_PROMPT" | grep -iE '\b(is .+ true|fact check|verify that|confirm that)\b' > /dev/null; then
+    # AUTO-EXECUTE: Generate truth verification format automatically
+    CLAIM=$(echo "$USER_PROMPT" | sed 's/"/\\"/g')
+    echo ""
+    echo "═══════════════════════════════════════════════════════════════════"
+    echo "🔴 RULE 3 AUTO-TRIGGER: Truth Verification Format Applied"
+    echo "═══════════════════════════════════════════════════════════════════"
+    echo ""
+    python3 -c "
+import sys
+sys.path.insert(0, '/Users/sena/.claude/sena_controller_v3.0')
+from sena_auto_format import auto_apply_format
+result = auto_apply_format('$CLAIM')
+if result:
+    print(result)
+"
+    echo ""
+    echo "═══════════════════════════════════════════════════════════════════"
+    echo "Verification format applied. Complete the analysis."
+    echo "═══════════════════════════════════════════════════════════════════"
+fi
+
+# Check for code analysis triggers (RULE 4)
+if echo "$USER_PROMPT" | grep -iE '\b(analyze|review|check|examine).*(code|script|function|program)|code.*(review|analysis|quality)|refactor|optimize|debug|fix.*code\b' > /dev/null; then
+    # AUTO-EXECUTE: Generate code analysis format automatically
+    CODE_REQUEST=$(echo "$USER_PROMPT" | sed 's/"/\\"/g')
+    echo ""
+    echo "═══════════════════════════════════════════════════════════════════"
+    echo "🔴 RULE 4 AUTO-TRIGGER: Code Analysis Format Applied"
+    echo "═══════════════════════════════════════════════════════════════════"
+    echo ""
+    python3 -c "
+import sys
+sys.path.insert(0, '/Users/sena/.claude/sena_controller_v3.0')
+from sena_auto_format import auto_apply_format
+result = auto_apply_format('$CODE_REQUEST')
+if result:
+    print(result)
+"
+    echo ""
+    echo "═══════════════════════════════════════════════════════════════════"
+    echo "Code analysis format applied. Provide detailed analysis."
+    echo "═══════════════════════════════════════════════════════════════════"
+fi
+
+# ============================================================
+# SENA Status Check Detection (original functionality)
+# ============================================================
+
+if echo "$USER_PROMPT" | grep -iq "sena.*active\|sena.*status\|sena.*running\|is sena\|check sena"; then
+    cat <<'SENA_STATUS_CHECK'
+
+**IMPORTANT: Detected SENA Controller question. Use correct checking method:**
+
+Do NOT search process list (`ps aux | grep sena`) - username is "sena" which causes false results.
+
+SENA Controller loads via PYTHONSTARTUP, not as separate process.
+
+**Correct method:**
+1. Check: `ls -ld ~/.claude/sena_controller_v3.0/`
+2. Check: `cat ~/.claude/.controller_enabled`
+3. Test: `python3 -c "from claude_integration import sena; s=sena.get_status(); print(f'SENA: {s[\"health\"]} ({s[\"active_features\"]} features)')"`
+
+Expected: Directory exists, enabled=yes, Python shows FULL_PERFORMANCE
+
+Now check using these methods.
+
+SENA_STATUS_CHECK
+fi
+
+# Exit with 0 to allow prompt to continue (context added via stdout above)
+exit 0

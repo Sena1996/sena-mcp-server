@@ -1,69 +1,75 @@
-# 🦁 SENA MCP Server
+# 🦁 SENA Controller - Complete Package
 
-**Official Model Context Protocol server for SENA Controller intelligence features**
+**Universal AI intelligence system for Claude Desktop + Claude Code CLI**
 
 [![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-blue)](https://modelcontextprotocol.io/)
-[![Version](https://img.shields.io/badge/version-1.0.0-green)](https://github.com/yourusername/sena-mcp-server)
+[![Claude Code](https://img.shields.io/badge/Claude_Code-Hooks-green)](https://github.com/Sena1996/sena-mcp-server)
+[![Version](https://img.shields.io/badge/version-1.0.0-brightgreen)](https://github.com/Sena1996/sena-mcp-server)
 
-## Overview
+---
 
-SENA MCP Server brings enterprise-grade AI intelligence features to Claude Desktop through the Model Context Protocol. Access brilliant thinking methodologies, truth verification, code analysis, and more directly in Claude Desktop.
+## 🎯 What is SENA?
 
-## Features
+SENA is a **complete intelligence enhancement system** for Claude that works everywhere:
 
-### 🧠 Brilliant Thinking
-- First principles analysis
-- Root cause analysis (5 Whys, Fishbone)
-- Multi-criteria decision making
-- Systems thinking
-- Lateral thinking techniques
+- **🖥️ Claude Desktop** (via MCP protocol)
+- **💻 Claude Code CLI** (via hooks + MCP)
 
-### 🔍 Truth Verification
-- Anti-hallucination fact checking
-- Evidence-based analysis
-- Confidence scoring
-- Source validation
+**One package. Two deployment modes. Complete intelligence.**
 
-### 📊 Beautiful Formatting
-- Unicode table generation
-- Progress bars with SENA branding
-- Structured output formatting
-- Professional presentation
+---
 
-### 💻 Code Analysis
-- Quality metrics (clarity, performance, security)
-- SOLID principles validation
-- Architecture pattern detection
-- Security vulnerability scanning
+## 📦 What's Inside
 
-### 📈 SENA Metrics
-- Health monitoring
-- Component status tracking
-- Version verification
-- Memory system integration
+### ✅ MCP Server (Works: Desktop + CLI)
+Enterprise-grade AI tools through official MCP protocol:
+- 🧠 **Brilliant Thinking** - First principles, root cause, systems thinking
+- 🔍 **Truth Verification** - Anti-hallucination fact checking
+- 📊 **Beautiful Tables** - Unicode formatting with SENA branding
+- 💻 **Code Analysis** - Security, performance, architecture analysis
+- 📈 **Health Metrics** - System monitoring and status
 
-## Installation
+### ✅ CLI Hooks (Works: Claude Code Only)
+Terminal-specific behavior enhancements:
+- 🦁 **SENA Prefix** - Mandatory "SENA 🦁" branding on every response
+- 🎨 **Output Filtering** - Clean, beautiful terminal display
+- ⚡ **Auto-Triggers** - Automatic formatting for keywords (table, why, how)
+- 🔧 **Git Integration** - Clean commit messages (no AI credits)
+- 📊 **Progress Injection** - Auto-progress bars for multi-step tasks
 
-### Prerequisites
+---
 
-- Python 3.10 or higher
-- `uv` package manager (recommended) or `pip`
-- Claude Desktop app
+## 🚀 Quick Installation
 
-### Quick Start
+### Option 1: Automated Install (Recommended)
 
 ```bash
-# Using uv (recommended)
-uvx sena-mcp-server
+# Clone repository
+git clone https://github.com/Sena1996/sena-mcp-server.git
+cd sena-mcp-server
 
-# Or install globally
-uv pip install sena-mcp-server
-
-# Or using pip
-pip install sena-mcp-server
+# Run installer
+./install.sh
 ```
 
-### Claude Desktop Configuration
+The installer will ask:
+1. **Full** - MCP Server + CLI Hooks (complete experience)
+2. **MCP Only** - Just intelligence tools (Claude Desktop)
+3. **Hooks Only** - Just CLI behavior (Claude Code terminal)
+
+### Option 2: Manual Installation
+
+#### Prerequisites
+
+```bash
+# Install uv (Python package manager)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install dependencies
+uv sync
+```
+
+#### For Claude Desktop (MCP Server)
 
 Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
@@ -71,8 +77,13 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 {
   "mcpServers": {
     "sena": {
-      "command": "uvx",
-      "args": ["sena-mcp-server"],
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/Users/YOUR_USERNAME/path/to/sena-mcp-server",
+        "run",
+        "sena-mcp-server"
+      ],
       "env": {
         "SENA_MODE": "full"
       }
@@ -81,44 +92,119 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 }
 ```
 
-## Available Tools
+**Then restart Claude Desktop.**
+
+#### For Claude Code CLI (Hooks)
+
+```bash
+# Copy hooks
+mkdir -p ~/.claude/hooks
+cp hooks/*.sh ~/.claude/hooks/
+chmod +x ~/.claude/hooks/*.sh
+
+# Enable SENA always-on mode
+touch ~/.claude/.sena_always_on
+
+# Configure hooks in ~/.claude/settings.json
+{
+  "userPromptSubmitHook": "~/.claude/hooks/user-prompt-submit.sh",
+  "assistantResponseSubmitHook": "~/.claude/hooks/sena-enforcer.sh",
+  "postToolUseHook": "~/.claude/hooks/post-tool-use.sh"
+}
+```
+
+---
+
+## 💡 Usage Examples
+
+### In Claude Desktop (MCP Tools)
+
+```
+User: Use brilliant thinking to analyze why our API is slow
+Claude: [Performs first principles analysis using SENA methodology]
+
+User: Verify: "React 18 has automatic batching"
+Claude: [Runs truth verification with evidence]
+
+User: Create a table comparing database performance
+Claude: [Generates beautiful Unicode table]
+
+User: Analyze this code for security issues
+Claude: [Comprehensive security analysis]
+
+User: Show SENA health status
+Claude: [Displays system metrics]
+```
+
+### In Claude Code CLI (Hooks + MCP)
+
+```bash
+$ claude
+
+User: give me mars info in table
+Assistant: SENA 🦁
+
+╔══════════════════════════════════════════════╗
+║            📊 MARS INFORMATION               ║
+╚══════════════════════════════════════════════╝
+
+┌────────────────────────────────────────────┐
+│ Property        │ Value                    │
+├────────────────────────────────────────────┤
+│ Diameter        │ 6,779 km                 │
+│ Distance        │ 227.9M km                │
+│ Surface Temp    │ -63°C                    │
+└────────────────────────────────────────────┘
+```
+
+**Notice:** Every response starts with "SENA 🦁" - that's the hook system!
+
+---
+
+## 🧠 MCP Tools Reference
 
 ### `sena_brilliant_thinking`
-Analyze complex problems using advanced thinking methodologies.
+Analyze complex problems using advanced methodologies.
 
 **Parameters:**
-- `problem` (string): Problem to analyze
-- `methodology` (string, optional): Specific methodology (auto, first_principles, root_cause, systems, etc.)
+- `problem` (string): Problem description
+- `methodology` (string): `auto`, `first_principles`, `root_cause`, `systems`, `decision_matrix`
 
 **Example:**
 ```
-Use brilliant thinking to analyze why our API response time increased
+Use brilliant thinking to determine the root cause of database deadlocks
 ```
+
+---
 
 ### `sena_verify_truth`
-Verify the truth of statements with anti-hallucination features.
+Verify statements with anti-hallucination features.
 
 **Parameters:**
-- `statement` (string): Statement to verify
-- `require_evidence` (boolean, optional): Require evidence sources
+- `statement` (string): Claim to verify
+- `require_evidence` (boolean): Demand evidence sources
 
 **Example:**
 ```
-Verify: "React 18 introduced automatic batching for better performance"
+Verify: "TypeScript has better performance than JavaScript"
 ```
+
+---
 
 ### `sena_format_table`
 Create beautiful Unicode tables.
 
 **Parameters:**
-- `headers` (array): Table column headers
-- `rows` (array): Table data rows
-- `title` (string, optional): Table title
+- `headers` (array): Column headers
+- `rows` (array): Data rows
+- `title` (string): Optional table title
 
 **Example:**
 ```
-Create a table comparing Next.js, React, and Vue performance metrics
+Create table: Framework, Speed, Bundle Size for React, Vue, Svelte
 ```
+
+---
 
 ### `sena_analyze_code`
 Comprehensive code quality analysis.
@@ -126,15 +212,21 @@ Comprehensive code quality analysis.
 **Parameters:**
 - `code` (string): Code to analyze
 - `language` (string): Programming language
-- `focus` (string, optional): Analysis focus (security, performance, architecture, all)
+- `focus` (string): `security`, `performance`, `architecture`, `all`
 
 **Example:**
-```
-Analyze this TypeScript code for security vulnerabilities
+```typescript
+Analyze this code for security:
+
+function login(username, password) {
+  return db.query(`SELECT * FROM users WHERE user='${username}'`);
+}
 ```
 
+---
+
 ### `sena_get_health`
-Get SENA system health and metrics.
+Get SENA system health status.
 
 **Parameters:** None
 
@@ -143,111 +235,298 @@ Get SENA system health and metrics.
 Show SENA health status
 ```
 
-### `sena_progress_bar`
-Generate beautiful progress indicators.
-
-**Parameters:**
-- `tasks` (array): List of tasks with status
-- `style` (string, optional): Progress bar style
-
-**Example:**
+**Returns:**
+```json
+{
+  "status": "healthy",
+  "version": "1.0.0",
+  "mode": "mcp",
+  "components": {
+    "brilliant_thinking": "operational",
+    "truth_verification": "operational",
+    "code_analysis": "operational",
+    "formatting": "operational",
+    "metrics": "operational"
+  }
+}
 ```
-Show progress for: database migration, API testing, deployment
+
+---
+
+## 🔧 CLI Hooks Reference
+
+### Hook Scripts
+
+| Hook | Purpose | Location |
+|------|---------|----------|
+| `user-prompt-submit.sh` | Enforces SENA prefix, detects keywords | Pre-processing |
+| `sena-enforcer.sh` | Validates output format | Post-processing |
+| `post-tool-use.sh` | Cleans tool execution display | After tool use |
+| `permission-request.sh` | Custom permission handling | Permission requests |
+| `conversation-progress.sh` | Progress tracking | During execution |
+| `auto-progress.sh` | Auto-progress injection | Multi-step tasks |
+
+### Hook Triggers
+
+| User Input | Auto-Applied Format |
+|------------|---------------------|
+| "why", "how", "explain" | BRILLIANT THINKING format |
+| "table", "tabular" | UNICODE TABLE format |
+| "is X true", "fact check" | TRUTH VERIFICATION format |
+| "analyze code" | CODE ANALYSIS format |
+| Multiple operations | PROGRESS BARS |
+
+### SENA Always-On Mode
+
+When `~/.claude/.sena_always_on` exists:
+- ✅ **EVERY response** must start with "SENA 🦁"
+- ✅ Applies to ALL requests (no exceptions)
+- ✅ Enforced by hooks automatically
+
+To disable:
+```bash
+rm ~/.claude/.sena_always_on
 ```
 
-## Architecture
+---
+
+## 📊 Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  SENA CONTROLLER COMPLETE PACKAGE                           │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  📦 MCP SERVER                    🔧 CLI HOOKS             │
+│  (Universal)                      (Claude Code Only)       │
+│                                                             │
+│  ├─ Brilliant Thinking            ├─ SENA 🦁 Prefix       │
+│  ├─ Truth Verification            ├─ Output Filtering      │
+│  ├─ Table Formatting              ├─ Auto-Triggers         │
+│  ├─ Code Analysis                 ├─ Git Integration       │
+│  └─ Health Metrics                └─ Progress Injection    │
+│                                                             │
+│  Works:                           Works:                    │
+│  ✅ Claude Desktop                ✅ Claude Code CLI       │
+│  ✅ Claude Code CLI               ❌ Claude Desktop        │
+│                                                             │
+│  Protocol: MCP (official)         Protocol: Bash hooks     │
+│  Distribution: This repo          Distribution: This repo  │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Directory Structure
 
 ```
 sena-mcp-server/
 ├── src/
-│   ├── server.py          # Main MCP server
-│   ├── tools/
-│   │   ├── thinking.py    # Brilliant thinking tools
-│   │   ├── verification.py # Truth verification
-│   │   ├── formatting.py  # Table & progress bars
-│   │   ├── code_analysis.py # Code quality analysis
-│   │   └── metrics.py     # Health & metrics
-│   ├── knowledge/
-│   │   ├── reasoning_frameworks.py
-│   │   ├── security_patterns.py
-│   │   ├── performance_patterns.py
-│   │   └── architecture_patterns.py
-│   └── utils/
-│       ├── unicode_tables.py
-│       └── formatters.py
+│   └── sena_mcp/
+│       ├── __init__.py
+│       └── server.py           # Main MCP server
+├── hooks/
+│   ├── user-prompt-submit.sh   # Pre-processing hook
+│   ├── sena-enforcer.sh        # Post-validation hook
+│   ├── post-tool-use.sh        # Tool cleanup hook
+│   ├── permission-request.sh   # Permission handler
+│   ├── conversation-progress.sh # Progress tracking
+│   └── auto-progress.sh        # Auto-progress bars
 ├── tests/
-├── pyproject.toml
-├── README.md
-└── LICENSE
+│   └── test_server.py          # MCP server tests
+├── install.sh                  # Automated installer
+├── pyproject.toml              # Python package config
+├── README.md                   # This file
+├── LICENSE                     # MIT License
+├── DEPLOYMENT_PLAN.md          # Architecture docs
+└── .gitignore
 ```
-
-## Knowledge Base Integration
-
-SENA includes persistent knowledge bases:
-
-- **Reasoning Frameworks**: First principles, root cause analysis, decision matrices
-- **Security Patterns**: OWASP Top 10, secure coding, cryptography
-- **Performance Patterns**: Algorithmic optimization, caching, database tuning
-- **Architecture Patterns**: SOLID, design patterns, DDD, microservices
-
-## Development
-
-```bash
-# Clone repository
-git clone https://github.com/yourusername/sena-mcp-server
-cd sena-mcp-server
-
-# Install dependencies
-uv sync
-
-# Run tests
-uv run pytest
-
-# Run server locally
-uv run sena-mcp-server
-```
-
-## Testing with MCP Inspector
-
-```bash
-# Install MCP Inspector
-npm install -g @modelcontextprotocol/inspector
-
-# Test SENA server
-mcp inspector uvx sena-mcp-server
-```
-
-## Version History
-
-### v1.0.0 (2025-11-23)
-- Initial release
-- Brilliant thinking methodologies
-- Truth verification system
-- Beautiful formatting (tables, progress bars)
-- Code quality analysis
-- Health metrics monitoring
-- Knowledge base integration
-
-## Contributing
-
-Contributions welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) first.
-
-## License
-
-MIT License - see [LICENSE](LICENSE) file
-
-## Credits
-
-- **Creator**: SENA Team
-- **MCP Protocol**: Anthropic PBC
-- **Inspired by**: Claude Code Controller v3.0
-
-## Support
-
-- **Issues**: https://github.com/yourusername/sena-mcp-server/issues
-- **Documentation**: https://github.com/yourusername/sena-mcp-server/wiki
-- **MCP Docs**: https://modelcontextprotocol.io/
 
 ---
 
-**🦁 Bringing SENA intelligence to Claude Desktop through MCP!**
+## 🧪 Testing
+
+### Test MCP Server
+
+```bash
+# Run tests
+uv run pytest
+
+# Test with MCP Inspector
+npx @modelcontextprotocol/inspector uv --directory . run sena-mcp-server
+```
+
+### Test CLI Hooks
+
+```bash
+# Verify hooks installed
+ls -la ~/.claude/hooks/
+
+# Test in Claude Code CLI
+claude
+# Type: "give me mars info in table"
+# Should see: SENA 🦁 prefix + beautiful table
+```
+
+---
+
+## 🔍 Troubleshooting
+
+### MCP Server Issues
+
+**Problem:** Claude Desktop doesn't see SENA tools
+
+**Solution:**
+1. Check config path: `~/Library/Application Support/Claude/claude_desktop_config.json`
+2. Verify JSON syntax (no trailing commas)
+3. Restart Claude Desktop completely
+4. Check logs: `~/Library/Logs/Claude/mcp*.log`
+
+**Problem:** MCP server fails to start
+
+**Solution:**
+```bash
+# Test manually
+uv run sena-mcp-server
+
+# Check dependencies
+uv sync
+
+# Verify Python version
+python3 --version  # Must be 3.10+
+```
+
+### Hook Issues
+
+**Problem:** No "SENA 🦁" prefix in terminal
+
+**Solution:**
+1. Check always-on flag: `ls ~/.claude/.sena_always_on`
+2. Verify hooks exist: `ls ~/.claude/hooks/`
+3. Check permissions: `chmod +x ~/.claude/hooks/*.sh`
+4. Verify settings: `cat ~/.claude/settings.json`
+
+**Problem:** Hooks not triggering
+
+**Solution:**
+```bash
+# Re-run installer
+./install.sh
+
+# Or manually
+cp hooks/*.sh ~/.claude/hooks/
+chmod +x ~/.claude/hooks/*.sh
+```
+
+---
+
+## 🎯 Feature Compatibility Matrix
+
+| Feature | MCP | Hook | Where It Works |
+|---------|-----|------|----------------|
+| **SENA 🦁 Prefix** | ❌ | ✅ | CLI only |
+| **Brilliant Thinking** | ✅ | ✅ | Desktop + CLI |
+| **Truth Verification** | ✅ | ✅ | Desktop + CLI |
+| **Table Formatting** | ✅ | ✅ | Desktop + CLI |
+| **Code Analysis** | ✅ | ✅ | Desktop + CLI |
+| **Health Metrics** | ✅ | ❌ | Desktop + CLI (via MCP) |
+| **Output Filtering** | ❌ | ✅ | CLI only |
+| **Auto-Triggers** | ❌ | ✅ | CLI only |
+| **Git Clean Commits** | ❌ | ✅ | CLI only |
+| **Progress Bars** | ✅ | ✅ | Desktop + CLI |
+
+**Summary:**
+- **22 features** work via MCP (universal)
+- **18 features** work via hooks (CLI-specific)
+- **12 features** work in both systems
+
+Full details: See [SENA_FEATURE_COMPATIBILITY_TABLE.md](/.claude/SENA_FEATURE_COMPATIBILITY_TABLE.md)
+
+---
+
+## 📚 Knowledge Base
+
+SENA includes persistent knowledge bases accessible via MCP:
+
+- **Reasoning Frameworks** - First principles, root cause, decision matrices, systems thinking
+- **Security Patterns** - OWASP Top 10, secure coding, cryptography best practices
+- **Performance Patterns** - Algorithmic optimization, caching, database tuning
+- **Architecture Patterns** - SOLID, design patterns, DDD, microservices, CQRS
+
+---
+
+## 🚀 Publishing to PyPI (Optional)
+
+To make SENA installable via `uvx sena-mcp-server` globally:
+
+```bash
+# Build package
+uv build
+
+# Publish to PyPI (requires account)
+uv publish
+
+# Or test with TestPyPI first
+uv publish --repository testpypi
+```
+
+After publishing, users can install with:
+```bash
+uvx sena-mcp-server
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing`)
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Credits
+
+- **Creator**: SENA 🦁
+- **MCP Protocol**: [Anthropic PBC](https://www.anthropic.com/)
+- **Inspired by**: Claude Code Controller v3.0
+- **FastMCP**: Official Python MCP SDK
+
+---
+
+## 📞 Support
+
+- **Issues**: [GitHub Issues](https://github.com/Sena1996/sena-mcp-server/issues)
+- **MCP Docs**: [Model Context Protocol](https://modelcontextprotocol.io/)
+- **Claude Code Docs**: [Claude Code CLI](https://docs.anthropic.com/claude-code)
+
+---
+
+## 🎉 Version History
+
+### v1.0.0 (2025-11-24)
+- ✅ Initial release
+- ✅ MCP server with 5 core tools
+- ✅ CLI hooks system (6 hooks)
+- ✅ Automated installer
+- ✅ Complete documentation
+- ✅ Knowledge base integration
+- ✅ Both Desktop + CLI support
+
+---
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║       🦁 SENA: Complete Intelligence for Claude             ║
+║                                                              ║
+║       Desktop + CLI • MCP + Hooks • One Package             ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
