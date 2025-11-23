@@ -13,6 +13,7 @@ Official MCP server for use with Claude Desktop.
 """
 
 import asyncio
+from pathlib import Path
 from typing import Any, Dict, List, Optional
 from mcp.server.fastmcp import FastMCP
 
@@ -20,7 +21,7 @@ from mcp.server.fastmcp import FastMCP
 mcp = FastMCP("SENA")
 
 # SENA version
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 
 
 @mcp.tool()
@@ -377,6 +378,102 @@ def sena_get_health() -> Dict[str, Any]:
         "uptime": "100%",
         "mode": "mcp"
     }
+
+
+# ============================================================================
+# KNOWLEDGE BASE RESOURCES
+# ============================================================================
+
+@mcp.resource("sena://knowledge/reasoning-frameworks")
+def reasoning_frameworks() -> str:
+    """
+    Access SENA reasoning frameworks knowledge base.
+
+    Provides advanced reasoning methodologies including:
+    - First principles thinking
+    - Root cause analysis (5 Whys, Fishbone diagrams)
+    - Structured decision making (Decision matrices, Cost-benefit analysis)
+    - Systems thinking (Feedback loops, Leverage points)
+    - Lateral thinking (Creative problem-solving techniques)
+    - Multi-criteria decision analysis (AHP, TOPSIS)
+    - Probabilistic thinking (Bayes' Theorem, Expected Value)
+    - Constraint-based thinking (Theory of Constraints)
+    - Inversion thinking (Failure mode analysis)
+    - Mental models (Second-order thinking, Circle of competence)
+
+    Returns:
+        Complete reasoning frameworks markdown content (579 lines)
+    """
+    path = Path(__file__).parent.parent.parent / "knowledge" / "reasoning-frameworks.md"
+    return path.read_text()
+
+
+@mcp.resource("sena://knowledge/security-patterns")
+def security_patterns() -> str:
+    """
+    Access SENA security patterns knowledge base.
+
+    Provides security best practices and patterns including:
+    - Authentication patterns (MFA, JWT, Session management)
+    - Authorization patterns (RBAC, ABAC)
+    - Input validation & sanitization (SQL injection, XSS, Command injection prevention)
+    - Cryptography patterns (Password hashing, Data encryption, Secure random)
+    - API security patterns (Rate limiting, CORS, API key management)
+    - Secure configuration (Environment variables, Secrets management)
+    - Logging & monitoring (Secure logging practices)
+    - Common vulnerability checklist (OWASP Top 10 coverage)
+
+    Returns:
+        Complete security patterns markdown content (612 lines)
+    """
+    path = Path(__file__).parent.parent.parent / "knowledge" / "security-patterns.md"
+    return path.read_text()
+
+
+@mcp.resource("sena://knowledge/performance-patterns")
+def performance_patterns() -> str:
+    """
+    Access SENA performance patterns knowledge base.
+
+    Provides performance optimization strategies including:
+    - Algorithmic complexity patterns (Big O analysis, Common optimizations)
+    - Database optimization (N+1 queries, Indexing, Query batching)
+    - Caching strategies (Cache-aside, Write-through, Cache invalidation)
+    - Memory optimization (Object pooling, Lazy initialization, Pagination)
+    - Network optimization (Request batching, Compression, HTTP/2, CDN)
+    - Async & concurrency patterns (Parallel execution, Rate-limited concurrency)
+    - Data structure selection (Performance characteristics guide)
+    - Code-level optimizations (Memoization, Debouncing, Throttling)
+    - Monitoring & profiling (Performance metrics, Profiling tools)
+    - Performance budgets (Target metrics for web and API)
+
+    Returns:
+        Complete performance patterns markdown content (544 lines)
+    """
+    path = Path(__file__).parent.parent.parent / "knowledge" / "performance-patterns.md"
+    return path.read_text()
+
+
+@mcp.resource("sena://knowledge/architecture-patterns")
+def architecture_patterns() -> str:
+    """
+    Access SENA architecture patterns knowledge base.
+
+    Provides software architecture and design patterns including:
+    - Core architectural patterns (Layered, Microservices, Event-driven)
+    - Domain-Driven Design (Bounded contexts, Aggregates, Value objects)
+    - Hexagonal Architecture (Ports & Adapters pattern)
+    - CQRS (Command Query Responsibility Segregation)
+    - Event Sourcing (Event-based state management)
+    - SOLID principles (With practical code examples)
+    - Design patterns (Creational, Structural, Behavioral patterns)
+    - API design principles (RESTful best practices)
+
+    Returns:
+        Complete architecture patterns markdown content (808 lines)
+    """
+    path = Path(__file__).parent.parent.parent / "knowledge" / "architecture-patterns.md"
+    return path.read_text()
 
 
 def main():

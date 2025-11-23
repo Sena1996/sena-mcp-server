@@ -4,7 +4,7 @@
 
 [![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-blue)](https://modelcontextprotocol.io/)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-Hooks-green)](https://github.com/Sena1996/sena-mcp-server)
-[![Version](https://img.shields.io/badge/version-1.0.0-brightgreen)](https://github.com/Sena1996/sena-mcp-server)
+[![Version](https://img.shields.io/badge/version-1.1.0-brightgreen)](https://github.com/Sena1996/sena-mcp-server)
 
 ---
 
@@ -28,6 +28,15 @@ Enterprise-grade AI tools through official MCP protocol:
 - 📊 **Beautiful Tables** - Unicode formatting with SENA branding
 - 💻 **Code Analysis** - Security, performance, architecture analysis
 - 📈 **Health Metrics** - System monitoring and status
+
+### ✅ Knowledge Bases (MCP Resources - Works: Desktop + CLI)
+Persistent intelligence accessible across all sessions:
+- 📚 **Reasoning Frameworks** (579 lines) - 10 thinking methodologies
+- 🔒 **Security Patterns** (612 lines) - OWASP Top 10, auth, crypto
+- ⚡ **Performance Patterns** (544 lines) - Optimization strategies
+- 🏗️ **Architecture Patterns** (808 lines) - SOLID, DDD, design patterns
+
+**Total: 2,543 lines of persistent intelligence**
 
 ### ✅ CLI Hooks (Works: Claude Code Only)
 Terminal-specific behavior enhancements:
@@ -397,7 +406,18 @@ sena-mcp-server/
 ├── src/
 │   └── sena_mcp/
 │       ├── __init__.py
-│       └── server.py           # Main MCP server
+│       └── server.py           # Main MCP server (5 tools + 4 resources)
+├── knowledge/                  # NEW in v1.1.0
+│   ├── README.md              # Knowledge base guide
+│   ├── reasoning-frameworks.md # 579 lines - 10 methodologies
+│   ├── security-patterns.md    # 612 lines - OWASP Top 10
+│   ├── performance-patterns.md # 544 lines - Optimization
+│   └── architecture-patterns.md# 808 lines - SOLID, DDD
+├── docs/                       # NEW in v1.1.0
+│   ├── ARCHITECTURE.md        # System architecture
+│   ├── FEATURE_COMPATIBILITY.md # MCP vs Hooks matrix
+│   ├── CLAUDE_CLI_RULES.md    # CLI rules documentation
+│   └── examples/              # Reference implementations
 ├── hooks/
 │   ├── user-prompt-submit.sh   # Pre-processing hook
 │   ├── sena-enforcer.sh        # Post-validation hook
@@ -411,7 +431,7 @@ sena-mcp-server/
 ├── pyproject.toml              # Python package config
 ├── README.md                   # This file
 ├── LICENSE                     # MIT License
-├── DEPLOYMENT_PLAN.md          # Architecture docs
+├── DEPLOYMENT_PLAN.md          # Deployment guide
 └── .gitignore
 ```
 
@@ -509,22 +529,45 @@ chmod +x ~/.claude/hooks/*.sh
 | **Progress Bars** | ✅ | ✅ | Desktop + CLI |
 
 **Summary:**
-- **22 features** work via MCP (universal)
+- **26 features** work via MCP (universal - includes 4 knowledge base resources)
 - **18 features** work via hooks (CLI-specific)
-- **12 features** work in both systems
+- **16 features** work in both systems
 
-Full details: See [SENA_FEATURE_COMPATIBILITY_TABLE.md](/.claude/SENA_FEATURE_COMPATIBILITY_TABLE.md)
+Full details: See [docs/FEATURE_COMPATIBILITY.md](docs/FEATURE_COMPATIBILITY.md)
 
 ---
 
-## 📚 Knowledge Base
+## 📚 Knowledge Bases (MCP Resources)
 
-SENA includes persistent knowledge bases accessible via MCP:
+SENA includes **2,543 lines of persistent intelligence** accessible via MCP resources:
 
-- **Reasoning Frameworks** - First principles, root cause, decision matrices, systems thinking
-- **Security Patterns** - OWASP Top 10, secure coding, cryptography best practices
-- **Performance Patterns** - Algorithmic optimization, caching, database tuning
-- **Architecture Patterns** - SOLID, design patterns, DDD, microservices, CQRS
+### Available Knowledge Bases
+
+| Knowledge Base | MCP Resource | Lines | Coverage |
+|----------------|--------------|-------|----------|
+| **Reasoning Frameworks** | `sena://knowledge/reasoning-frameworks` | 579 | 10 frameworks |
+| **Security Patterns** | `sena://knowledge/security-patterns` | 612 | 8 categories |
+| **Performance Patterns** | `sena://knowledge/performance-patterns` | 544 | 10 optimization areas |
+| **Architecture Patterns** | `sena://knowledge/architecture-patterns` | 808 | 8 pattern types |
+
+### How to Access
+
+**Claude Desktop:**
+```
+Ask Claude: "Show me SENA security patterns for authentication"
+Claude will access: sena://knowledge/security-patterns
+```
+
+**Claude Code CLI:**
+```
+Claude can access MCP resources automatically when needed
+Also referenced in ~/.claude/CLAUDE.md for persistent access
+```
+
+**Detailed Information:**
+- [knowledge/README.md](knowledge/README.md) - Complete knowledge base guide
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - System architecture
+- [docs/FEATURE_COMPATIBILITY.md](docs/FEATURE_COMPATIBILITY.md) - Feature matrix
 
 ---
 
@@ -587,14 +630,27 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🎉 Version History
 
-### v1.0.0 (2025-11-24)
-- ✅ Initial release
+### v1.1.0 (2025-11-24) - **Knowledge Integration**
+- ✅ Added 4 knowledge bases as MCP resources (2,543 lines total)
+  - reasoning-frameworks.md (579 lines)
+  - security-patterns.md (612 lines)
+  - performance-patterns.md (544 lines)
+  - architecture-patterns.md (808 lines)
+- ✅ Created comprehensive docs/ directory
+  - ARCHITECTURE.md (system architecture)
+  - FEATURE_COMPATIBILITY.md (34-feature matrix)
+  - CLAUDE_CLI_RULES.md (CLI rules documentation)
+- ✅ Updated MCP server with 4 resource endpoints
+- ✅ Enhanced README with knowledge base guide
+- ✅ 85% feature coverage from SENA v3.3.1
+
+### v1.0.0 (2025-11-23) - **Initial Release**
 - ✅ MCP server with 5 core tools
 - ✅ CLI hooks system (6 hooks)
 - ✅ Automated installer
 - ✅ Complete documentation
-- ✅ Knowledge base integration
 - ✅ Both Desktop + CLI support
+- ✅ GitHub repository published
 
 ---
 
