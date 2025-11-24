@@ -10,7 +10,7 @@ fi
 
 # Start progress in background with 10 second timeout
 (
-    python3 /Users/sena/.claude/sena_live_progress.py &
+    python3 $HOME/.claude/sena_live_progress.py &
     PROGRESS_PID=$!
 
     # Let it run for conversation processing (10 seconds)

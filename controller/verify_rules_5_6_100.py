@@ -7,7 +7,7 @@ import sys
 import os
 from pathlib import Path
 
-sys.path.insert(0, '/Users/sena/.claude/sena_controller_v3.0')
+sys.path.insert(0, os.path.expanduser('~.claude/sena_controller_v3.0'))
 
 print("═" * 70)
 print("VERIFICATION: RULES 5 & 6 - 100% IMPLEMENTATION TEST")
@@ -27,7 +27,7 @@ rule5_checks = {
 }
 
 # Check file exists
-if Path('/Users/sena/.claude/sena_controller_v3.0/sena_clean_output_100.py').exists():
+if Path(os.path.expanduser('~/.claude/sena_controller_v3.0/sena_clean_output_100.py').exists():
     rule5_checks['sena_clean_output_100.py exists'] = True
 
 # Test clean function
@@ -59,7 +59,7 @@ except Exception as e:
     print(f"Error testing clean function: {e}")
 
 # Check hook integration
-hook_file = Path('/Users/sena/.claude/hooks/sena-enforcer.sh')
+hook_file = Path(os.path.expanduser('~/.claude/hooks/sena-enforcer.sh')
 if hook_file.exists():
     content = hook_file.read_text()
     if 'sena_controller_100' in content or 'RULE 5 & 6' in content:
@@ -86,7 +86,7 @@ rule6_checks = {
 }
 
 # Check file exists
-if Path('/Users/sena/.claude/sena_controller_v3.0/sena_progress_auto_100.py').exists():
+if Path(os.path.expanduser('~/.claude/sena_controller_v3.0/sena_progress_auto_100.py').exists():
     rule6_checks['sena_progress_auto_100.py exists'] = True
 
 # Test progress functions
@@ -108,7 +108,7 @@ except Exception as e:
     print(f"Error testing progress: {e}")
 
 # Check hook for auto-trigger
-hook_file = Path('/Users/sena/.claude/hooks/user-prompt-submit.sh')
+hook_file = Path(os.path.expanduser('~/.claude/hooks/user-prompt-submit.sh')
 if hook_file.exists():
     content = hook_file.read_text()
     if 'RULE 6: AUTO-PROGRESS' in content:
@@ -133,7 +133,7 @@ controller_checks = {
 }
 
 # Check controller exists
-if Path('/Users/sena/.claude/sena_controller_v3.0/sena_controller_100.py').exists():
+if Path(os.path.expanduser('~/.claude/sena_controller_v3.0/sena_controller_100.py').exists():
     controller_checks['sena_controller_100.py exists'] = True
 
 # Test controller

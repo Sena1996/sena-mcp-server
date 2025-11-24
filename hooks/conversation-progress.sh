@@ -8,7 +8,7 @@ show_conversation_progress() {
 
     # Start progress in background
     (
-        python3 /Users/sena/.claude/sena_live_progress.py --interactive &
+        python3 $HOME/.claude/sena_live_progress.py --interactive &
         PROGRESS_PID=$!
 
         # Let it run for conversation processing

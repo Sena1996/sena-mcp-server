@@ -7,8 +7,9 @@ Verify 100% automatic operation
 import sys
 import subprocess
 import json
+import os
 
-sys.path.insert(0, '/Users/sena/.claude/sena_controller_v3.0')
+sys.path.insert(0, os.path.expanduser('~/.claude/sena_controller_v3.0'))
 from sena_auto_format import auto_apply_format
 
 print("═" * 60)
@@ -122,7 +123,8 @@ for test_input, expected_rule in hook_test_inputs:
     print(f"\nTesting: '{test_input}' → Expecting {expected_rule}")
 
     # Simulate hook execution
-    cmd = f"""echo '{test_input}' | bash /Users/sena/.claude/hooks/user-prompt-submit.sh 2>/dev/null | grep -q 'AUTO-TRIGGER' && echo '✅ Hook triggers automatically' || echo '❌ Hook not triggering'"""
+    hooks_path = os.path.expanduser('~/.claude/hooks/user-prompt-submit.sh')
+    cmd = f"""echo '{test_input}' | bash {hooks_path} 2>/dev/null | grep -q 'AUTO-TRIGGER' && echo '✅ Hook triggers automatically' || echo '❌ Hook not triggering'"""
 
     try:
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True)

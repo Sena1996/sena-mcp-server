@@ -18,7 +18,7 @@ USER_MESSAGE=$(echo "$INPUT" | python3 -c "import sys, json; data=json.load(sys.
 # Always process through 100% controller for clean output and progress
 CLAUDE_RESPONSE=$(echo "$CLAUDE_RESPONSE" | python3 -c "
 import sys
-sys.path.insert(0, '/Users/sena/.claude/sena_controller_v3.0')
+sys.path.insert(0, '$HOME/.claude/sena_controller_v3.0')
 
 # Import 100% implementations
 from sena_controller_100 import process_response, auto_detect_and_apply
@@ -68,7 +68,7 @@ if echo "$USER_MESSAGE" | grep -qiE '\b(why|how|explain|what causes|what makes)\
 
         # Extract the question and run SENA
         QUESTION=$(echo "$USER_MESSAGE" | sed 's/"/\\"/g')
-        python3 -c "import sys; sys.path.insert(0, '/Users/sena/.claude/sena_controller_v3.0'); from sena_direct_output import think_as_text; print(think_as_text('$QUESTION'))"
+        python3 -c "import sys; sys.path.insert(0, '$HOME/.claude/sena_controller_v3.0'); from sena_direct_output import think_as_text; print(think_as_text('$QUESTION'))"
 
         exit 1  # Prevent original response from showing
     fi

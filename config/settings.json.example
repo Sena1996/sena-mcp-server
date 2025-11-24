@@ -16,7 +16,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/Users/sena/.claude/hooks/user-prompt-submit.sh"
+            "command": "~/.claude/hooks/user-prompt-submit.sh"
           }
         ]
       }
@@ -26,7 +26,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/Users/sena/.claude/hooks/sena-enforcer.sh"
+            "command": "~/.claude/hooks/sena-enforcer.sh"
           }
         ]
       }
@@ -36,7 +36,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/Users/sena/.claude/hooks/permission-request.sh"
+            "command": "~/.claude/hooks/permission-request.sh"
           }
         ]
       }
@@ -47,7 +47,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/Users/sena/.claude/hooks/post-tool-use.sh"
+            "command": "~/.claude/hooks/post-tool-use.sh"
           }
         ]
       },
@@ -56,7 +56,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/Users/sena/.claude/hooks/post-tool-use.sh"
+            "command": "~/.claude/hooks/post-tool-use.sh"
           }
         ]
       }

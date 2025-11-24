@@ -95,7 +95,7 @@ if echo "$USER_PROMPT" | grep -iE '\b(why|how|explain|what causes|what makes|how
     echo ""
     python3 -c "
 import sys
-sys.path.insert(0, '/Users/sena/.claude/sena_controller_v3.0')
+sys.path.insert(0, '$HOME/.claude/sena_controller_v3.0')
 from sena_auto_format import auto_apply_format
 result = auto_apply_format('$QUESTION')
 if result:
@@ -118,7 +118,7 @@ if echo "$USER_PROMPT" | grep -iE '\b(table|tabular|tabular format|in table form
     echo ""
     python3 -c "
 import sys
-sys.path.insert(0, '/Users/sena/.claude/sena_controller_v3.0')
+sys.path.insert(0, '$HOME/.claude/sena_controller_v3.0')
 from sena_auto_format import auto_apply_format
 result = auto_apply_format('$REQUEST')
 if result:
@@ -141,7 +141,7 @@ if echo "$USER_PROMPT" | grep -iE '\b(is .+ true|fact check|verify that|confirm 
     echo ""
     python3 -c "
 import sys
-sys.path.insert(0, '/Users/sena/.claude/sena_controller_v3.0')
+sys.path.insert(0, '$HOME/.claude/sena_controller_v3.0')
 from sena_auto_format import auto_apply_format
 result = auto_apply_format('$CLAIM')
 if result:
@@ -164,7 +164,7 @@ if echo "$USER_PROMPT" | grep -iE '\b(analyze|review|check|examine).*(code|scrip
     echo ""
     python3 -c "
 import sys
-sys.path.insert(0, '/Users/sena/.claude/sena_controller_v3.0')
+sys.path.insert(0, '$HOME/.claude/sena_controller_v3.0')
 from sena_auto_format import auto_apply_format
 result = auto_apply_format('$CODE_REQUEST')
 if result:

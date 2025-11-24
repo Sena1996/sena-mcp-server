@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
 # Import the 100% implementations
-sys.path.insert(0, '/Users/sena/.claude/sena_controller_v3.0')
+sys.path.insert(0, os.path.expanduser('~.claude/sena_controller_v3.0'))
 
 from sena_clean_output_100 import ensure_clean, intercept_tool
 from sena_progress_auto_100 import (

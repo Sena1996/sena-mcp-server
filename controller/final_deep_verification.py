@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 import time
 
-sys.path.insert(0, '/Users/sena/.claude/sena_controller_v3.0')
+sys.path.insert(0, os.path.expanduser('~.claude/sena_controller_v3.0'))
 
 class FinalDeepVerification:
     """Complete verification of all SENA rules with truth testing"""
@@ -673,7 +673,8 @@ if __name__ == "__main__":
     final_score = verifier.run_complete_verification()
 
     # Save results to file
-    with open('/Users/sena/.claude/sena_controller_v3.0/FINAL_VERIFICATION_RESULTS.txt', 'w') as f:
+    results_path = os.path.expanduser('~/.claude/sena_controller_v3.0/FINAL_VERIFICATION_RESULTS.txt')
+    with open(results_path, 'w') as f:
         f.write(f"SENA Controller v3.0 - Final Verification\n")
         f.write(f"Date: {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
         f.write(f"Overall Score: {final_score:.1f}%\n")

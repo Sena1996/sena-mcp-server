@@ -135,19 +135,30 @@ if [ "$INSTALL_HOOKS" = true ]; then
     echo ""
 
     HOOKS_DIR="$HOME/.claude/hooks"
+    CONTROLLER_DIR="$HOME/.claude/sena_controller_v3.0"
 
     echo "📁 Installing hooks to: $HOOKS_DIR"
+    echo "📁 Installing controller modules to: $CONTROLLER_DIR"
 
-    # Create hooks directory
+    # Create directories
     mkdir -p "$HOOKS_DIR"
+    mkdir -p "$CONTROLLER_DIR"
 
     # Copy hooks
+    echo "Copying hooks..."
     cp -v hooks/*.sh "$HOOKS_DIR/"
 
     # Make executable
     chmod +x "$HOOKS_DIR"/*.sh
 
+    # Copy controller modules
+    echo "Copying controller modules..."
+    cp -v controller/*.py "$CONTROLLER_DIR/"
+    cp -v controller/VERSION "$CONTROLLER_DIR/" 2>/dev/null || true
+    cp -v controller/README.md "$CONTROLLER_DIR/" 2>/dev/null || true
+
     echo "✅ Hooks installed"
+    echo "✅ Controller modules installed"
     echo ""
 
     # Update Claude Code settings
@@ -198,7 +209,8 @@ fi
 
 if [ "$INSTALL_HOOKS" = true ]; then
     echo "🔧 CLI Hooks:"
-    echo "   ✅ Installed to: $HOOKS_DIR"
+    echo "   ✅ Hooks installed to: $HOOKS_DIR"
+    echo "   ✅ Controller modules installed to: $CONTROLLER_DIR"
     echo "   ✅ SENA always-on mode enabled"
     echo "   💡 Use in terminal: claude"
     echo ""
