@@ -8,6 +8,7 @@ This is the LOOPHOLE - custom tool means custom name display
 import subprocess
 import json
 import sys
+import shlex
 from typing import Dict, Any, List
 from pathlib import Path
 from collections import deque
@@ -88,10 +89,20 @@ class SENASilentExecutor:
 
         try:
             # Execute command using subprocess
-            # WARNING: shell=True is used for compatibility but commands are validated
+            # SECURITY: Use shell=False with shlex.split for safe execution
+            try:
+                cmd_parts = shlex.split(command)
+            except ValueError as e:
+                return {
+                    'success': False,
+                    'error': f'Invalid command syntax: {str(e)}',
+                    'exit_code': -1,
+                    'security_blocked': True
+                }
+
             result = subprocess.run(
-                command,
-                shell=True,
+                cmd_parts,  # List of arguments, not string
+                shell=False,  # SECURE: No shell interpretation
                 capture_output=capture_output,
                 text=True,
                 timeout=30
@@ -144,10 +155,15 @@ class SENASilentExecutor:
         Returns:
             String output from command
         """
+        # SECURITY: Validate command first
+        if not self._validate_command(command):
+            return ""
+
         try:
+            cmd_parts = shlex.split(command)
             result = subprocess.run(
-                command,
-                shell=True,
+                cmd_parts,
+                shell=False,  # SECURE: No shell interpretation
                 capture_output=True,
                 text=True,
                 timeout=30

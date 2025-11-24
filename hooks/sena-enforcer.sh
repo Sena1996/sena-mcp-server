@@ -85,9 +85,14 @@ if echo "$USER_MESSAGE" | grep -qiE '\b(why|how|explain|what causes|what makes)\
         echo "Forcing SENA execution now..."
         echo ""
 
-        # Extract the question and run SENA
-        QUESTION=$(echo "$USER_MESSAGE" | sed 's/"/\\"/g')
-        python3 -c "import sys; sys.path.insert(0, '$HOME/.claude/sena_controller_v3.0'); from sena_direct_output import think_as_text; print(think_as_text('$QUESTION'))"
+        # Extract the question and run SENA (SECURITY: use stdin to prevent injection)
+        echo "$USER_MESSAGE" | python3 -c "
+import sys
+sys.path.insert(0, '$HOME/.claude/sena_controller_v3.0')
+from sena_direct_output import think_as_text
+question = sys.stdin.read().strip()
+print(think_as_text(question))
+"
 
         exit 1  # Prevent original response from showing
     fi

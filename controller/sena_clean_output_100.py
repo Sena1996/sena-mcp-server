@@ -112,28 +112,17 @@ class SENACleanOutput100:
         return self.process_output(text)
 
     def intercept_tool(self, command: str, tool: str = 'bash') -> str:
-        """Intercept tool execution and return only clean output"""
-        result = ""
+        """
+        SECURITY: This method has been removed due to unvalidated command execution.
 
-        if tool == 'bash':
-            try:
-                process = subprocess.run(
-                    command,
-                    shell=True,
-                    capture_output=True,
-                    text=True,
-                    timeout=10
-                )
-                result = process.stdout
-                if process.stderr and 'error' in process.stderr.lower():
-                    result += f"\n{process.stderr}"
-            except subprocess.TimeoutExpired:
-                result = "Operation completed"
-            except Exception:
-                result = ""
-
-        # Clean the result
-        return self.process_output(result)
+        Previously allowed arbitrary shell command execution without validation,
+        creating a critical security vulnerability. Use validated execution methods
+        from sena_silent_executor.py instead.
+        """
+        raise NotImplementedError(
+            "Direct command execution removed for security. "
+            "Use sena_silent_executor.get_silent_executor() with validation instead."
+        )
 
     def wrap_response(self, response: str) -> str:
         """Wrap response with SENA formatting and clean output"""
