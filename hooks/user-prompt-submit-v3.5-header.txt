@@ -1,0 +1,18 @@
+#!/bin/bash
+# SENA v3.5.0 - User Prompt Submit Hook (Enhanced for Transparent Architecture)
+# Automatically enforces SENA rules by injecting reminders BEFORE Claude sees the message
+# NOW with transparent Python execution - NO visible commands
+
+# Script directory for accessing python-executor.sh
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Helper function for transparent Python execution
+transparent_python() {
+    local MODULE="$1"
+    local FUNCTION="$2"
+    local ARGS="$3"
+
+    # Execute Python silently via python-executor
+    "$SCRIPT_DIR/python-executor.sh" "$MODULE" "$FUNCTION" "$ARGS" 2>/dev/null
+}
+

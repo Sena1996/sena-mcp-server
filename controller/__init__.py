@@ -32,7 +32,7 @@ Testing & Verification:
     - verify_rules_5_6_100: Verify Rules 5-6 implementation
 """
 
-__version__ = "3.3.1"
+__version__ = "3.5.0"
 __all__ = [
     "auto_integration",
     "sena_auto_format",

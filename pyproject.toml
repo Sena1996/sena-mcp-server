@@ -1,7 +1,7 @@
 [project]
 name = "sena-mcp-server"
-version = "2.1.0"
-description = "SENA Controller v2.1 - TRUE 100% Feature Parity: MCP tools + 2,543 lines knowledge + Autonomous skills + CLI hooks + 20 Python modules + 122 commands + Complete config"
+version = "3.5.0"
+description = "SENA Controller v3.5 - Transparent Architecture: MCP tools + 2,543 lines knowledge + Autonomous skills + Transparent hooks (NO visible Bash/Python) + 20 Python modules + 122 commands + Complete config"
 authors = [
     {name = "SENA Team", email = "sena@example.com"}
 ]

@@ -4,7 +4,7 @@
 
 [![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-blue)](https://modelcontextprotocol.io/)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-Hooks-green)](https://github.com/Sena1996/sena-mcp-server)
-[![Version](https://img.shields.io/badge/version-2.1.0-brightgreen)](https://github.com/Sena1996/sena-mcp-server)
+[![Version](https://img.shields.io/badge/version-3.5.0-brightgreen)](https://github.com/Sena1996/sena-mcp-server)
 
 ---
 
@@ -16,6 +16,50 @@ SENA is a **complete intelligence enhancement system** for Claude that works eve
 - **💻 Claude Code CLI** (via hooks + MCP)
 
 **One package. Two deployment modes. Complete intelligence.**
+
+---
+
+## ✨ NEW in v3.5.0: Transparent Architecture
+
+**Revolutionary hook system that eliminates ALL visible command execution!**
+
+**Before v3.5.0:**
+```
+User: "give me moon info in table"
+Claude: I'll create a table for you.
+> Bash(python3 ~/.claude/sena_auto_format.py --table ...)
+[Running sena_auto_format.py...]
+[Generating table...]
+```
+
+**After v3.5.0:**
+```
+User: "give me moon info in table"
+SENA 🦁
+
+╔══════════════════════════════════════╗
+║         🌙 MOON DATA                 ║
+╚══════════════════════════════════════╝
+
+[NO commands visible, NO Python shown - PURE OUTPUT]
+```
+
+**What This Means:**
+- ✅ **NO Bash commands** visible in terminal
+- ✅ **NO Python imports/executions** shown
+- ✅ **NO tool use complexity** exposed
+- ✅ **Everything automatic** via transparent hooks
+- ✅ **Professional appearance** - feels like magic, not engineering
+
+**How It Works:**
+1. **python-executor.sh** - Universal Python wrapper (silent execution)
+2. **pre-bash-execution.sh** - Intercepts Bash commands BEFORE execution
+3. **pre-python-execution.sh** - Transparent module loading
+4. **Enhanced post-tool-use.sh** - Complete tool output suppression
+
+**Result:** Claude Code feels like magic. Zero learning curve. Zero technical details.
+
+**Full Documentation:** [docs/TRANSPARENT_ARCHITECTURE.md](docs/TRANSPARENT_ARCHITECTURE.md)
 
 ---
 
@@ -49,15 +93,26 @@ Proactive code analysis and suggestions via MCP tools:
 **Total: 3 MCP tools + 3 MCP resources (1,128 lines of autonomous intelligence)**
 
 ### ✅ CLI Hooks (Works: Claude Code Only)
-Terminal-specific behavior enhancements via 6 Bash hooks (20.7KB total):
+Terminal-specific behavior enhancements via **9 Bash hooks** with **transparent execution** (25.3KB total):
+
+**NEW in v3.5.0 - Transparent Architecture:**
+- 🔇 **python-executor.sh** - Universal silent Python wrapper (NO visible execution)
+- 🚫 **pre-bash-execution.sh** - Intercepts Bash BEFORE execution (NO commands shown)
+- 🔬 **pre-python-execution.sh** - Transparent module loading (NO imports visible)
+
+**Core Hooks:**
 - 🦁 **SENA Prefix** - Mandatory "SENA 🦁" branding on every response
-- 🎨 **Output Filtering** - Clean, beautiful terminal display
+- 🎨 **Output Filtering** - Clean, beautiful terminal display (ENHANCED v3.5.0)
 - ⚡ **Auto-Triggers** - Automatic formatting for keywords (table, why, how)
 - 🔧 **Git Integration** - Clean commit messages (no AI credits)
 - 📊 **Progress Injection** - Auto-progress bars for multi-step tasks
 - 🔐 **Permission Control** - Dynamic tool permissions without restart
 
-**Detailed Documentation:** [hooks/README.md](hooks/README.md)
+**Result:** ZERO Bash/Python visibility. Professional, seamless experience.
+
+**Detailed Documentation:**
+- [hooks/README.md](hooks/README.md) - Complete hook system guide
+- [docs/TRANSPARENT_ARCHITECTURE.md](docs/TRANSPARENT_ARCHITECTURE.md) - v3.5.0 architecture
 
 ### ✅ Controller Modules (Works: Claude Code Only - NEW in v2.0.0)
 ALL Python automation modules from SENA v3.3.1 (20 modules, ~162KB):
@@ -434,13 +489,23 @@ Show SENA health status
 
 **Complete Hook System Documentation:** [hooks/README.md](hooks/README.md)
 
-### Hook Scripts (6 files, 20.7KB total)
+### Hook Scripts (9 files, 25.3KB total)
+
+**NEW in v3.5.0 - Transparent Execution Hooks:**
+
+| Hook | Size | Purpose | Type |
+|------|------|---------|------|
+| **python-executor.sh** | 1.5KB | Universal Python wrapper (silent execution) | Transparent |
+| **pre-bash-execution.sh** | 1.1KB | Intercepts Bash BEFORE execution | Transparent |
+| **pre-python-execution.sh** | 0.7KB | Transparent module loading | Transparent |
+
+**Core Hooks:**
 
 | Hook | Size | Purpose | Type |
 |------|------|---------|------|
 | **user-prompt-submit.sh** | 12.2KB | Enforces SENA prefix, detects keywords | Pre-Hook |
 | **sena-enforcer.sh** | 4.5KB | Validates output format compliance | Post-Hook |
-| **post-tool-use.sh** | 1.1KB | Suppresses verbose tool output | Post-Hook |
+| **post-tool-use.sh** | 1.1KB | Suppresses verbose tool output (ENHANCED v3.5.0) | Post-Hook |
 | **permission-request.sh** | 1.7KB | Dynamic tool permissions control | Permission |
 | **conversation-progress.sh** | 0.7KB | Conversation-level progress bars | Progress |
 | **auto-progress.sh** | 0.6KB | Auto-progress injection | Progress |
@@ -529,12 +594,16 @@ sena-mcp-server/
 │   ├── ARCHITECTURE.md        # System architecture
 │   ├── FEATURE_COMPATIBILITY.md # MCP vs Hooks matrix
 │   ├── CLAUDE_CLI_RULES.md    # CLI rules documentation
+│   ├── TRANSPARENT_ARCHITECTURE.md # NEW v3.5.0: Transparent hooks guide (15KB)
 │   └── examples/              # Reference implementations
-├── hooks/                       # NEW in v1.2.0 - Documented
+├── hooks/                       # NEW in v1.2.0, ENHANCED in v3.5.0
 │   ├── README.md              # Complete hook system guide
+│   ├── python-executor.sh      # NEW v3.5.0: Universal Python wrapper (1.5KB)
+│   ├── pre-bash-execution.sh   # NEW v3.5.0: Bash interceptor (1.1KB)
+│   ├── pre-python-execution.sh # NEW v3.5.0: Python interceptor (0.7KB)
 │   ├── user-prompt-submit.sh   # Pre-processing hook (12.2KB)
 │   ├── sena-enforcer.sh        # Post-validation hook (4.5KB)
-│   ├── post-tool-use.sh        # Tool cleanup hook (1.1KB)
+│   ├── post-tool-use.sh        # Tool cleanup hook (1.1KB, ENHANCED v3.5.0)
 │   ├── permission-request.sh   # Permission handler (1.7KB)
 │   ├── conversation-progress.sh # Progress tracking (0.7KB)
 │   └── auto-progress.sh        # Auto-progress bars (0.6KB)
@@ -909,6 +978,123 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ---
 
 ## 🎉 Version History
+
+### v3.5.0 (2025-11-24) - **🚀 Transparent Architecture - ZERO Visible Commands**
+
+**Revolutionary hook system that eliminates ALL visible Bash/Python execution!**
+
+**NEW Transparent Execution Hooks (3 files, 3.3KB):**
+- ✅ **python-executor.sh** (1.5KB) - Universal Python wrapper with silent execution
+  - Executes ANY Python module with NO terminal output
+  - Returns only results (internal processing)
+  - All stderr/stdout suppressed
+  - Dynamic module loading
+- ✅ **pre-bash-execution.sh** (1.1KB) - Bash interceptor BEFORE execution
+  - Intercepts ALL Bash commands before they execute
+  - Detects Python execution patterns
+  - Redirects to silent execution via python-executor.sh
+  - Blocks original command visibility
+- ✅ **pre-python-execution.sh** (0.7KB) - Python import interceptor
+  - Enables transparent module loading
+  - Sets SENA_TRANSPARENT_MODE flag
+  - NO "Importing..." messages visible
+  - Internal logging only
+
+**ENHANCED Core Hooks:**
+- ✅ **post-tool-use.sh** - Complete tool suppression (ENHANCED)
+  - Detects Python execution in Bash output
+  - Extracts module names automatically
+  - Executes via python-executor.sh transparently
+  - Logs transparent execution internally
+  - Suppresses: Bash, Python, Read, Write, Edit tool output
+
+**NEW Documentation (15KB):**
+- ✅ **docs/TRANSPARENT_ARCHITECTURE.md** - Complete transparent architecture guide
+  - Before/after comparisons
+  - Complete workflow diagrams (400+ lines)
+  - Hook coordination details
+  - Installation and debugging guide
+  - Use cases and examples
+
+**Version Updates:**
+- ✅ Updated pyproject.toml: 2.1.0 → 3.5.0
+- ✅ Updated src/sena_mcp/server.py: VERSION = "3.5.0"
+- ✅ Updated controller/__init__.py: __version__ = "3.5.0"
+
+**User Experience Transformation:**
+
+**Before v3.5.0 (Visible Complexity):**
+```
+User: "give me moon info in table"
+Claude: I'll create a table for you.
+> Bash(python3 ~/.claude/sena_auto_format.py --table ...)
+[Running sena_auto_format.py...]
+[Loading modules...]
+[Generating table...]
+
+╔══════════════════════════════════════╗
+║         🌙 MOON DATA                 ║
+╚══════════════════════════════════════╝
+```
+❌ User sees Bash commands
+❌ User sees Python execution
+❌ Technical details exposed
+
+**After v3.5.0 (Complete Transparency):**
+```
+User: "give me moon info in table"
+SENA 🦁
+
+╔══════════════════════════════════════╗
+║         🌙 MOON DATA                 ║
+╚══════════════════════════════════════╝
+
+[NO commands visible, NO Python shown]
+```
+✅ Zero command visibility
+✅ Zero Python complexity
+✅ Professional appearance
+
+**How Transparent Architecture Works:**
+
+1. **User submits prompt** → `user-prompt-submit.sh` (can call python-executor.sh silently)
+2. **Claude tries Bash/Python** → `pre-bash-execution.sh` intercepts BEFORE execution
+3. **Python execution detected** → Redirected to `python-executor.sh` (silent)
+4. **Result captured internally** → NO terminal output
+5. **Tool output processed** → `post-tool-use.sh` suppresses ALL tool details
+6. **User sees** → ONLY clean, formatted output
+
+**Benefits:**
+- ✅ NO Bash commands visible in terminal
+- ✅ NO Python imports/executions shown
+- ✅ NO tool use complexity exposed
+- ✅ NO technical details visible
+- ✅ ONLY clean, beautiful, formatted output
+- ✅ Professional appearance
+- ✅ Zero learning curve for users
+- ✅ Feels like "magic" not "engineering"
+
+**Technical Implementation:**
+- Silent execution: Python subprocess with stdout/stderr to `/dev/null`
+- Result-only return: Only function output captured
+- Internal logging: Debug logs to `/tmp/.sena_transparent_log` (not shown to user)
+- Multiple suppression layers: Pre-hooks + Post-hooks working together
+- Centralized Python execution: All Python calls through python-executor.sh
+
+**Comparison:**
+| Feature | v2.1.0 | v3.5.0 |
+|---------|--------|--------|
+| Bash commands visible | ❌ Yes | ✅ No |
+| Python imports visible | ❌ Yes | ✅ No |
+| Tool use complexity | ❌ Exposed | ✅ Hidden |
+| User experience | ⚠️ Technical | ✅ Professional |
+| Transparent execution | ❌ No | ✅ Yes |
+| Silent Python calls | ❌ No | ✅ Yes |
+| Hook-based interception | ⚠️ Partial | ✅ Complete |
+
+**Full Documentation:** [docs/TRANSPARENT_ARCHITECTURE.md](docs/TRANSPARENT_ARCHITECTURE.md)
+
+---
 
 ### v2.1.0 (2025-11-24) - **TRUE 100% Feature Parity - Complete SENA v3.3.1**
 
