@@ -4,7 +4,7 @@ Test Clean Output Implementation - Rule 5 Verification
 """
 
 import sys
-sys.path.insert(0, os.path.expanduser('~.claude/sena_controller_v3.0'))
+sys.path.insert(0, os.path.expanduser('~/.claude/sena_controller_v3.0'))
 
 from clean_output_controller import CleanOutputController, ensure_clean_output
 from sena_silent_wrapper import bash, grep, glob, read, multi_execute
@@ -107,9 +107,9 @@ import os
 
 for file, desc in components.items():
     if 'enforcer' in file:
-        path = f"{os.path.expanduser('~.claude/hooks/{file}"
+        path = f"{os.path.expanduser('~/.claude/hooks/{file}"
     else:
-        path = f"{os.path.expanduser('~.claude/sena_controller_v3.0/{file}"
+        path = f"{os.path.expanduser('~/.claude/sena_controller_v3.0/{file}"
 
     if os.path.exists(path):
         print(f"✅ {file:<30} - {desc}")

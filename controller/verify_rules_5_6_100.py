@@ -7,7 +7,7 @@ import sys
 import os
 from pathlib import Path
 
-sys.path.insert(0, os.path.expanduser('~.claude/sena_controller_v3.0'))
+sys.path.insert(0, os.path.expanduser('~/.claude/sena_controller_v3.0'))
 
 print("═" * 70)
 print("VERIFICATION: RULES 5 & 6 - 100% IMPLEMENTATION TEST")

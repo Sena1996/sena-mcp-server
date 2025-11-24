@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 import time
 
-sys.path.insert(0, os.path.expanduser('~.claude/sena_controller_v3.0'))
+sys.path.insert(0, os.path.expanduser('~/.claude/sena_controller_v3.0'))
 
 class FinalDeepVerification:
     """Complete verification of all SENA rules with truth testing"""
