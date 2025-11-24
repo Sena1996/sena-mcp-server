@@ -1,6 +1,6 @@
 #!/bin/bash
-# SENA Controller Enforcement Hook - OPTIMIZED VERSION
-# Consolidated Python execution for 3.6x performance boost
+# SENA Controller Enforcement Hook
+# Automatically enforces SENA rules by injecting reminders BEFORE Claude sees the message
 
 # Check if running in Rider IDE mode
 RIDER_MODE="${SENA_IDE_MODE:-}"
@@ -35,71 +35,18 @@ fi
 # Read JSON input from stdin
 INPUT=$(cat)
 
-# ============================================================
-# OPTIMIZATION: CONSOLIDATED PYTHON EXECUTION
-# Instead of 5 separate Python spawns, use 1 for all operations
-# Performance: 54ms → 15ms (3.6x faster)
-# ============================================================
-
-# Parse JSON and check all rules in SINGLE Python process
-RULE_RESULTS=$(echo "$INPUT" | python3 <<'PYTHON_CONSOLIDATED'
+# Extract the prompt field from JSON using Python with error handling
+USER_PROMPT=$(echo "$INPUT" | python3 -c "
 import sys
 import json
-
-# Parse JSON once
 try:
     data = json.load(sys.stdin)
-    user_prompt = data.get('prompt', '')
+    print(data.get('prompt', ''))
 except (json.JSONDecodeError, KeyError, ValueError):
+    # Invalid JSON or missing field - output empty string
     print('')
     sys.exit(0)
-
-# Pre-configure path
-sys.path.insert(0, '$HOME/.claude/sena_controller_v3.0')
-
-# Check all triggers
-results = {
-    'prompt': user_prompt,
-    'rule1': False,  # Table
-    'rule2': False,  # Brilliant thinking
-    'rule3': False,  # Truth verification
-    'rule4': False,  # Code analysis
-}
-
-import re
-
-# Check triggers
-if re.search(r'\b(why|how|explain|what causes|what makes|how come)\b', user_prompt, re.IGNORECASE):
-    results['rule2'] = True
-
-if re.search(r'\b(table|tabular|tabular format|in table form)\b', user_prompt, re.IGNORECASE):
-    results['rule1'] = True
-
-if re.search(r'\b(is .+ true|fact check|verify that|confirm that)\b', user_prompt, re.IGNORECASE):
-    results['rule3'] = True
-
-if re.search(r'\b(analyze|review|check|examine).*(code|script|function|program)|code.*(review|analysis|quality)|refactor|optimize|debug|fix.*code\b', user_prompt, re.IGNORECASE):
-    results['rule4'] = True
-
-# If any rule triggered, apply format
-if any([results['rule1'], results['rule2'], results['rule3'], results['rule4']]):
-    from sena_auto_format import auto_apply_format
-    formatted = auto_apply_format(user_prompt)
-
-    # Output results as JSON
-    results['formatted'] = formatted if formatted else ''
-
-print(json.dumps(results))
-PYTHON_CONSOLIDATED
-)
-
-# Extract results
-USER_PROMPT=$(echo "$RULE_RESULTS" | python3 -c "import sys, json; data=json.load(sys.stdin); print(data.get('prompt', ''))")
-RULE1=$(echo "$RULE_RESULTS" | python3 -c "import sys, json; data=json.load(sys.stdin); print('true' if data.get('rule1') else 'false')")
-RULE2=$(echo "$RULE_RESULTS" | python3 -c "import sys, json; data=json.load(sys.stdin); print('true' if data.get('rule2') else 'false')")
-RULE3=$(echo "$RULE_RESULTS" | python3 -c "import sys, json; data=json.load(sys.stdin); print('true' if data.get('rule3') else 'false')")
-RULE4=$(echo "$RULE_RESULTS" | python3 -c "import sys, json; data=json.load(sys.stdin); print('true' if data.get('rule4') else 'false')")
-FORMATTED=$(echo "$RULE_RESULTS" | python3 -c "import sys, json; data=json.load(sys.stdin); print(data.get('formatted', ''))")
+" 2>/dev/null)
 
 # ============================================================
 # SENA ALWAYS-ON MODE: Check if persistent SENA mode is enabled
@@ -144,55 +91,99 @@ SENA_ALWAYS_ON
 fi
 
 # ============================================================
-# OUTPUT RULE TRIGGERS (if any matched)
+# RULE ENFORCEMENT: Check for SENA trigger words
 # ============================================================
 
-if [ "$RULE2" = "true" ]; then
+# Check for why/how/explain triggers (RULE 2)
+if echo "$USER_PROMPT" | grep -iE '\b(why|how|explain|what causes|what makes|how come)\b' > /dev/null; then
+    # AUTO-EXECUTE: Generate brilliant thinking format automatically
     echo ""
     echo "═══════════════════════════════════════════════════════════════════"
     echo "🔴 RULE 2 AUTO-TRIGGER: Brilliant Thinking Format Applied"
     echo "═══════════════════════════════════════════════════════════════════"
     echo ""
-    echo "$FORMATTED"
+    # SECURITY FIX: Use stdin to pass user input instead of embedding in code
+    echo "$USER_PROMPT" | python3 -c "
+import sys
+sys.path.insert(0, '$HOME/.claude/sena_controller_v3.0')
+from sena_auto_format import auto_apply_format
+question = sys.stdin.read().strip()
+result = auto_apply_format(question)
+if result:
+    print(result)
+"
     echo ""
     echo "═══════════════════════════════════════════════════════════════════"
     echo "Response formatted automatically. You may add additional context."
     echo "═══════════════════════════════════════════════════════════════════"
 fi
 
-if [ "$RULE1" = "true" ]; then
+# Check for table triggers (RULE 1)
+if echo "$USER_PROMPT" | grep -iE '\b(table|tabular|tabular format|in table form)\b' > /dev/null; then
+    # AUTO-EXECUTE: Generate table format automatically
     echo ""
     echo "═══════════════════════════════════════════════════════════════════"
     echo "🔴 RULE 1 AUTO-TRIGGER: Table Format Applied"
     echo "═══════════════════════════════════════════════════════════════════"
     echo ""
-    echo "$FORMATTED"
+    # SECURITY FIX: Use stdin to pass user input instead of embedding in code
+    echo "$USER_PROMPT" | python3 -c "
+import sys
+sys.path.insert(0, '$HOME/.claude/sena_controller_v3.0')
+from sena_auto_format import auto_apply_format
+request = sys.stdin.read().strip()
+result = auto_apply_format(request)
+if result:
+    print(result)
+"
     echo ""
     echo "═══════════════════════════════════════════════════════════════════"
     echo "Table generated automatically. Add data as needed."
     echo "═══════════════════════════════════════════════════════════════════"
 fi
 
-if [ "$RULE3" = "true" ]; then
+# Check for fact verification triggers (RULE 3)
+if echo "$USER_PROMPT" | grep -iE '\b(is .+ true|fact check|verify that|confirm that)\b' > /dev/null; then
+    # AUTO-EXECUTE: Generate truth verification format automatically
     echo ""
     echo "═══════════════════════════════════════════════════════════════════"
     echo "🔴 RULE 3 AUTO-TRIGGER: Truth Verification Format Applied"
     echo "═══════════════════════════════════════════════════════════════════"
     echo ""
-    echo "$FORMATTED"
+    # SECURITY FIX: Use stdin to pass user input instead of embedding in code
+    echo "$USER_PROMPT" | python3 -c "
+import sys
+sys.path.insert(0, '$HOME/.claude/sena_controller_v3.0')
+from sena_auto_format import auto_apply_format
+claim = sys.stdin.read().strip()
+result = auto_apply_format(claim)
+if result:
+    print(result)
+"
     echo ""
     echo "═══════════════════════════════════════════════════════════════════"
     echo "Verification format applied. Complete the analysis."
     echo "═══════════════════════════════════════════════════════════════════"
 fi
 
-if [ "$RULE4" = "true" ]; then
+# Check for code analysis triggers (RULE 4)
+if echo "$USER_PROMPT" | grep -iE '\b(analyze|review|check|examine).*(code|script|function|program)|code.*(review|analysis|quality)|refactor|optimize|debug|fix.*code\b' > /dev/null; then
+    # AUTO-EXECUTE: Generate code analysis format automatically
     echo ""
     echo "═══════════════════════════════════════════════════════════════════"
     echo "🔴 RULE 4 AUTO-TRIGGER: Code Analysis Format Applied"
     echo "═══════════════════════════════════════════════════════════════════"
     echo ""
-    echo "$FORMATTED"
+    # SECURITY FIX: Use stdin to pass user input instead of embedding in code
+    echo "$USER_PROMPT" | python3 -c "
+import sys
+sys.path.insert(0, '$HOME/.claude/sena_controller_v3.0')
+from sena_auto_format import auto_apply_format
+code_request = sys.stdin.read().strip()
+result = auto_apply_format(code_request)
+if result:
+    print(result)
+"
     echo ""
     echo "═══════════════════════════════════════════════════════════════════"
     echo "Code analysis format applied. Provide detailed analysis."

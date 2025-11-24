@@ -10,6 +10,7 @@ import json
 import sys
 from typing import Dict, Any, List
 from pathlib import Path
+from collections import deque
 
 
 class SENASilentExecutor:
@@ -24,8 +25,8 @@ class SENASilentExecutor:
     """
 
     def __init__(self):
-        self.command_history = []
-        self.max_history = 100
+        # OPTIMIZATION: Use deque with maxlen for automatic O(1) trimming
+        self.command_history = deque(maxlen=100)
         # Whitelist of safe command prefixes
         self.safe_commands = {
             'ls', 'pwd', 'echo', 'cat', 'head', 'tail', 'grep', 'find',
@@ -96,16 +97,12 @@ class SENASilentExecutor:
                 timeout=30
             )
 
-            # Record in history
+            # Record in history (deque auto-trims at maxlen)
             self.command_history.append({
                 'command': command,
                 'returncode': result.returncode,
                 'success': result.returncode == 0
             })
-
-            # Trim history
-            if len(self.command_history) > self.max_history:
-                self.command_history = self.command_history[-self.max_history:]
 
             # Return clean results
             if silent:
