@@ -35,8 +35,18 @@ fi
 # Read JSON input from stdin
 INPUT=$(cat)
 
-# Extract the prompt field from JSON using Python
-USER_PROMPT=$(echo "$INPUT" | python3 -c "import sys, json; data=json.load(sys.stdin); print(data.get('prompt', ''))")
+# Extract the prompt field from JSON using Python with error handling
+USER_PROMPT=$(echo "$INPUT" | python3 -c "
+import sys
+import json
+try:
+    data = json.load(sys.stdin)
+    print(data.get('prompt', ''))
+except (json.JSONDecodeError, KeyError, ValueError):
+    # Invalid JSON or missing field - output empty string
+    print('')
+    sys.exit(0)
+" 2>/dev/null)
 
 # ============================================================
 # SENA ALWAYS-ON MODE: Check if persistent SENA mode is enabled
@@ -87,17 +97,18 @@ fi
 # Check for why/how/explain triggers (RULE 2)
 if echo "$USER_PROMPT" | grep -iE '\b(why|how|explain|what causes|what makes|how come)\b' > /dev/null; then
     # AUTO-EXECUTE: Generate brilliant thinking format automatically
-    QUESTION=$(echo "$USER_PROMPT" | sed 's/"/\\"/g')
     echo ""
     echo "═══════════════════════════════════════════════════════════════════"
     echo "🔴 RULE 2 AUTO-TRIGGER: Brilliant Thinking Format Applied"
     echo "═══════════════════════════════════════════════════════════════════"
     echo ""
-    python3 -c "
+    # SECURITY FIX: Use stdin to pass user input instead of embedding in code
+    echo "$USER_PROMPT" | python3 -c "
 import sys
 sys.path.insert(0, '$HOME/.claude/sena_controller_v3.0')
 from sena_auto_format import auto_apply_format
-result = auto_apply_format('$QUESTION')
+question = sys.stdin.read().strip()
+result = auto_apply_format(question)
 if result:
     print(result)
 "
@@ -110,17 +121,18 @@ fi
 # Check for table triggers (RULE 1)
 if echo "$USER_PROMPT" | grep -iE '\b(table|tabular|tabular format|in table form)\b' > /dev/null; then
     # AUTO-EXECUTE: Generate table format automatically
-    REQUEST=$(echo "$USER_PROMPT" | sed 's/"/\\"/g')
     echo ""
     echo "═══════════════════════════════════════════════════════════════════"
     echo "🔴 RULE 1 AUTO-TRIGGER: Table Format Applied"
     echo "═══════════════════════════════════════════════════════════════════"
     echo ""
-    python3 -c "
+    # SECURITY FIX: Use stdin to pass user input instead of embedding in code
+    echo "$USER_PROMPT" | python3 -c "
 import sys
 sys.path.insert(0, '$HOME/.claude/sena_controller_v3.0')
 from sena_auto_format import auto_apply_format
-result = auto_apply_format('$REQUEST')
+request = sys.stdin.read().strip()
+result = auto_apply_format(request)
 if result:
     print(result)
 "
@@ -133,17 +145,18 @@ fi
 # Check for fact verification triggers (RULE 3)
 if echo "$USER_PROMPT" | grep -iE '\b(is .+ true|fact check|verify that|confirm that)\b' > /dev/null; then
     # AUTO-EXECUTE: Generate truth verification format automatically
-    CLAIM=$(echo "$USER_PROMPT" | sed 's/"/\\"/g')
     echo ""
     echo "═══════════════════════════════════════════════════════════════════"
     echo "🔴 RULE 3 AUTO-TRIGGER: Truth Verification Format Applied"
     echo "═══════════════════════════════════════════════════════════════════"
     echo ""
-    python3 -c "
+    # SECURITY FIX: Use stdin to pass user input instead of embedding in code
+    echo "$USER_PROMPT" | python3 -c "
 import sys
 sys.path.insert(0, '$HOME/.claude/sena_controller_v3.0')
 from sena_auto_format import auto_apply_format
-result = auto_apply_format('$CLAIM')
+claim = sys.stdin.read().strip()
+result = auto_apply_format(claim)
 if result:
     print(result)
 "
@@ -156,17 +169,18 @@ fi
 # Check for code analysis triggers (RULE 4)
 if echo "$USER_PROMPT" | grep -iE '\b(analyze|review|check|examine).*(code|script|function|program)|code.*(review|analysis|quality)|refactor|optimize|debug|fix.*code\b' > /dev/null; then
     # AUTO-EXECUTE: Generate code analysis format automatically
-    CODE_REQUEST=$(echo "$USER_PROMPT" | sed 's/"/\\"/g')
     echo ""
     echo "═══════════════════════════════════════════════════════════════════"
     echo "🔴 RULE 4 AUTO-TRIGGER: Code Analysis Format Applied"
     echo "═══════════════════════════════════════════════════════════════════"
     echo ""
-    python3 -c "
+    # SECURITY FIX: Use stdin to pass user input instead of embedding in code
+    echo "$USER_PROMPT" | python3 -c "
 import sys
 sys.path.insert(0, '$HOME/.claude/sena_controller_v3.0')
 from sena_auto_format import auto_apply_format
-result = auto_apply_format('$CODE_REQUEST')
+code_request = sys.stdin.read().strip()
+result = auto_apply_format(code_request)
 if result:
     print(result)
 "

@@ -8,9 +8,28 @@ INPUT=$(cat)
 RIDER_MODE="${SENA_IDE_MODE:-}"
 CLEAN_OUTPUT="${SENA_CLEAN_OUTPUT:-false}"
 
-# Extract response and last user message from JSON
-CLAUDE_RESPONSE=$(echo "$INPUT" | python3 -c "import sys, json; data=json.load(sys.stdin); print(data.get('response', ''))")
-USER_MESSAGE=$(echo "$INPUT" | python3 -c "import sys, json; data=json.load(sys.stdin); print(data.get('userMessage', data.get('prompt', '')))")
+# Extract response and last user message from JSON with error handling
+CLAUDE_RESPONSE=$(echo "$INPUT" | python3 -c "
+import sys
+import json
+try:
+    data = json.load(sys.stdin)
+    print(data.get('response', ''))
+except (json.JSONDecodeError, KeyError, ValueError):
+    print('')
+    sys.exit(0)
+" 2>/dev/null)
+
+USER_MESSAGE=$(echo "$INPUT" | python3 -c "
+import sys
+import json
+try:
+    data = json.load(sys.stdin)
+    print(data.get('userMessage', data.get('prompt', '')))
+except (json.JSONDecodeError, KeyError, ValueError):
+    print('')
+    sys.exit(0)
+" 2>/dev/null)
 
 # ============================================================
 # RULE 5 & 6: 100% CLEAN OUTPUT AND AUTO PROGRESS

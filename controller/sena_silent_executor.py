@@ -19,11 +19,49 @@ class SENASilentExecutor:
     - Returns clean results only
     - IDE shows "sena_execute" not "Bash(command)"
     - Full control over output display
+
+    SECURITY: Commands must be validated before execution to prevent injection
     """
 
     def __init__(self):
         self.command_history = []
         self.max_history = 100
+        # Whitelist of safe command prefixes
+        self.safe_commands = {
+            'ls', 'pwd', 'echo', 'cat', 'head', 'tail', 'grep', 'find',
+            'wc', 'sort', 'uniq', 'date', 'whoami', 'which', 'python3',
+            'git', 'mkdir', 'rm', 'cp', 'mv', 'touch', 'chmod'
+        }
+
+    def _validate_command(self, command: str) -> bool:
+        """
+        Validate command against whitelist and dangerous patterns
+
+        Args:
+            command: Command to validate
+
+        Returns:
+            True if command is safe, False otherwise
+        """
+        # Extract first word (command name)
+        cmd_name = command.split()[0] if command.strip() else ''
+
+        # Check against whitelist
+        if cmd_name not in self.safe_commands:
+            return False
+
+        # Check for dangerous patterns
+        dangerous_patterns = [
+            ';', '&&', '||', '|', '>', '<', '`', '$(',  # Command chaining/substitution
+            'rm -rf /', 'dd if=', 'mkfs', 'format',  # Destructive operations
+            ':(){', 'fork', 'exec',  # Fork bombs and exec
+        ]
+
+        for pattern in dangerous_patterns:
+            if pattern in command:
+                return False
+
+        return True
 
     def execute(self, command: str, capture_output: bool = True,
                 silent: bool = True) -> Dict[str, Any]:
@@ -38,8 +76,18 @@ class SENASilentExecutor:
         Returns:
             Dict with execution results (clean format)
         """
+        # SECURITY FIX: Validate command before execution
+        if not self._validate_command(command):
+            return {
+                'success': False,
+                'error': f'Command not allowed or contains dangerous patterns: {command.split()[0] if command else "empty"}',
+                'exit_code': -1,
+                'security_blocked': True
+            }
+
         try:
-            # Execute command using subprocess (NOT Bash tool)
+            # Execute command using subprocess
+            # WARNING: shell=True is used for compatibility but commands are validated
             result = subprocess.run(
                 command,
                 shell=True,

@@ -6,10 +6,39 @@
 # Read hook payload from stdin (JSON format)
 INPUT=$(cat)
 
-# Extract tool information using Python
-TOOL_NAME=$(echo "$INPUT" | python3 -c "import sys, json; data=json.load(sys.stdin); print(data.get('tool_name', ''))" 2>/dev/null)
-TOOL_OUTPUT=$(echo "$INPUT" | python3 -c "import sys, json; data=json.load(sys.stdin); print(data.get('output', ''))" 2>/dev/null)
-EXIT_CODE=$(echo "$INPUT" | python3 -c "import sys, json; data=json.load(sys.stdin); print(data.get('exit_code', 0))" 2>/dev/null)
+# Extract tool information using Python with error handling
+TOOL_NAME=$(echo "$INPUT" | python3 -c "
+import sys
+import json
+try:
+    data = json.load(sys.stdin)
+    print(data.get('tool_name', ''))
+except (json.JSONDecodeError, KeyError, ValueError):
+    print('')
+    sys.exit(0)
+" 2>/dev/null)
+
+TOOL_OUTPUT=$(echo "$INPUT" | python3 -c "
+import sys
+import json
+try:
+    data = json.load(sys.stdin)
+    print(data.get('output', ''))
+except (json.JSONDecodeError, KeyError, ValueError):
+    print('')
+    sys.exit(0)
+" 2>/dev/null)
+
+EXIT_CODE=$(echo "$INPUT" | python3 -c "
+import sys
+import json
+try:
+    data = json.load(sys.stdin)
+    print(data.get('exit_code', 0))
+except (json.JSONDecodeError, KeyError, ValueError):
+    print('0')
+    sys.exit(0)
+" 2>/dev/null)
 
 # ENHANCED: Check if Bash command was Python execution
 if [[ "$TOOL_NAME" == "Bash" ]]; then

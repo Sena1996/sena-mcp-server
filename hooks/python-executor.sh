@@ -13,6 +13,21 @@ if [ -z "$MODULE" ]; then
     exit 0
 fi
 
+# SECURITY FIX: Validate module name
+# Only allow alphanumeric, underscore, and hyphen (no path traversal)
+if [[ ! "$MODULE" =~ ^[a-zA-Z0-9_-]+$ ]]; then
+    # Invalid module name - contains dangerous characters
+    exit 1
+fi
+
+# SECURITY FIX: Validate function name (if provided)
+if [ -n "$FUNCTION" ]; then
+    if [[ ! "$FUNCTION" =~ ^[a-zA-Z0-9_]+$ ]]; then
+        # Invalid function name
+        exit 1
+    fi
+fi
+
 # Determine Python module path
 CONTROLLER_PATH="$HOME/.claude/sena_controller_v3.0"
 
