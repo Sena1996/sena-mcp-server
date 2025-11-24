@@ -1,11 +1,11 @@
 """
-SENA Controller v3.0 - Python Automation Modules
+SENA Controller v3.3.1 - Python Automation Modules
 
-This package contains the Python automation modules that power
+This package contains ALL Python automation modules that power
 SENA's advanced features including auto-formatting, metrics,
-session management, and integration automation.
+session management, verification, sync, and integration automation.
 
-Modules:
+Core Modules:
     - auto_integration: Automatic format detection and application
     - sena_auto_format: Auto formatting engine (Rule 1-4 enforcement)
     - sena_metrics_mcp: MCP metrics collection and reporting
@@ -15,9 +15,18 @@ Modules:
     - sena_progress_auto_100: Progress bar automation
     - sena_controller_100: Main controller orchestration
     - claude_sena_integration: Claude Code integration layer
+
+Advanced Modules:
+    - final_deep_verification: Deep verification system
+    - offline_sync: Offline synchronization capabilities
+    - sena_direct_output: Direct output handling
+    - sena_silent_executor: Silent execution mode
+    - sena_transparent_layer: Transparency layer
+    - sena_mcp_server: MCP server utilities
+    - pythonstartup: Python startup configuration
 """
 
-__version__ = "3.0.0"
+__version__ = "3.3.1"
 __all__ = [
     "auto_integration",
     "sena_auto_format",
@@ -28,4 +37,11 @@ __all__ = [
     "sena_progress_auto_100",
     "sena_controller_100",
     "claude_sena_integration",
+    "final_deep_verification",
+    "offline_sync",
+    "sena_direct_output",
+    "sena_silent_executor",
+    "sena_transparent_layer",
+    "sena_mcp_server",
+    "pythonstartup",
 ]
