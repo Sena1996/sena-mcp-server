@@ -1,0 +1,116 @@
+{
+  "version": "3.3.1",
+  "phase": 3,
+  "autonomous_skills": {
+    "auto_code_review": {
+      "enabled": true,
+      "description": "Automatic code quality analysis after significant changes",
+      "min_lines": 50,
+      "trigger_on": ["write", "commit"],
+      "frequency": "once_per_file_per_session",
+      "strictness": "balanced",
+      "focus_areas": ["all"],
+      "confidence_threshold": 0.8
+    },
+    "auto_optimize": {
+      "enabled": true,
+      "description": "Performance optimization suggestions for inefficient code",
+      "min_complexity": "O(n^2)",
+      "min_improvement": 2,
+      "trigger_on": ["complexity_detected"],
+      "frequency": "immediate",
+      "auto_apply": false,
+      "show_benchmarks": true,
+      "prefer_readability": false,
+      "confidence_threshold": 0.85
+    },
+    "auto_security_scan": {
+      "enabled": true,
+      "description": "Security vulnerability detection for sensitive code",
+      "min_severity": "medium",
+      "categories": [
+        "injection",
+        "xss",
+        "auth",
+        "crypto",
+        "access_control",
+        "command_injection",
+        "path_traversal"
+      ],
+      "trigger_on": [
+        "user_input",
+        "sql",
+        "file_ops",
+        "auth",
+        "crypto"
+      ],
+      "frequency": "every_occurrence",
+      "auto_fix": false,
+      "show_examples": true,
+      "show_attack_scenarios": true,
+      "owasp_version": "2021",
+      "confidence_threshold": 0.9
+    }
+  },
+  "reasoning_hooks": {
+    "pre_response_reasoning": {
+      "enabled": true,
+      "description": "Enhanced decision-making before every response",
+      "analyze_intent": true,
+      "consider_context": true,
+      "select_optimal_format": true
+    },
+    "multi_path_evaluation": {
+      "enabled": true,
+      "description": "Evaluate multiple solutions before selecting best",
+      "min_alternatives": 3,
+      "show_alternatives": false,
+      "explain_selection": true
+    },
+    "self_correction_check": {
+      "enabled": true,
+      "description": "Verify correctness after generating solutions",
+      "check_edge_cases": true,
+      "validate_assumptions": true,
+      "auto_correct": true
+    }
+  },
+  "proactive_patterns": {
+    "anticipatory_documentation": {
+      "enabled": true,
+      "description": "Suggest adding documentation for new code",
+      "min_function_lines": 20,
+      "trigger_on_new_functions": true
+    },
+    "test_generation_prompt": {
+      "enabled": true,
+      "description": "Offer to generate tests for production code",
+      "min_code_lines": 30,
+      "trigger_when_no_tests": true
+    },
+    "performance_warning": {
+      "enabled": true,
+      "description": "Warn about potentially slow operations",
+      "warn_large_datasets": true,
+      "suggest_profiling": true
+    },
+    "architecture_suggestion": {
+      "enabled": true,
+      "description": "Suggest refactoring for growing codebases",
+      "max_file_lines": 500,
+      "suggest_module_split": true
+    },
+    "security_reminder": {
+      "enabled": true,
+      "description": "Remind about security best practices",
+      "trigger_on_sensitive_ops": true,
+      "show_owasp_links": true
+    }
+  },
+  "global_settings": {
+    "quiet_mode": false,
+    "max_suggestions_per_session": 10,
+    "learn_from_feedback": true,
+    "respect_user_choices": true
+  }
+}

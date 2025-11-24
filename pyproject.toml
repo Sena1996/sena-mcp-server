@@ -1,7 +1,7 @@
 [project]
 name = "sena-mcp-server"
-version = "1.3.0"
-description = "SENA Controller MCP Server - Intelligence tools + 2,543 lines of knowledge + Complete CLI hooks + Phase 3 autonomous skills"
+version = "2.0.0"
+description = "SENA Controller v2.0 - Complete AI intelligence system: MCP tools + 2,543 lines knowledge + Autonomous skills + CLI hooks + Python controller + Config templates"
 authors = [
     {name = "SENA Team", email = "sena@example.com"}
 ]
