@@ -11,6 +11,7 @@ Core Modules:
     - sena_metrics_mcp: MCP metrics collection and reporting
     - sena_metrics: Analytics and performance tracking
     - session_manager: Session state and coordination
+    - sena_session_coordinator: Multi-session coordination
     - sena_clean_output_100: Output cleaning and formatting
     - sena_progress_auto_100: Progress bar automation
     - sena_controller_100: Main controller orchestration
@@ -24,6 +25,11 @@ Advanced Modules:
     - sena_transparent_layer: Transparency layer
     - sena_mcp_server: MCP server utilities
     - pythonstartup: Python startup configuration
+
+Testing & Verification:
+    - test_auto_rules: Test automatic rule application (Rules 1-4)
+    - test_clean_output: Test output cleaning functionality
+    - verify_rules_5_6_100: Verify Rules 5-6 implementation
 """
 
 __version__ = "3.3.1"
@@ -33,6 +39,7 @@ __all__ = [
     "sena_metrics_mcp",
     "sena_metrics",
     "session_manager",
+    "sena_session_coordinator",
     "sena_clean_output_100",
     "sena_progress_auto_100",
     "sena_controller_100",
@@ -44,4 +51,7 @@ __all__ = [
     "sena_transparent_layer",
     "sena_mcp_server",
     "pythonstartup",
+    "test_auto_rules",
+    "test_clean_output",
+    "verify_rules_5_6_100",
 ]
