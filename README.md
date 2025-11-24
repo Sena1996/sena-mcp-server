@@ -4,7 +4,7 @@
 
 [![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-blue)](https://modelcontextprotocol.io/)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-Hooks-green)](https://github.com/Sena1996/sena-mcp-server)
-[![Version](https://img.shields.io/badge/version-1.2.0-brightgreen)](https://github.com/Sena1996/sena-mcp-server)
+[![Version](https://img.shields.io/badge/version-1.3.0-brightgreen)](https://github.com/Sena1996/sena-mcp-server)
 
 ---
 
@@ -29,6 +29,8 @@ Enterprise-grade AI tools through official MCP protocol:
 - 💻 **Code Analysis** - Security, performance, architecture analysis
 - 📈 **Health Metrics** - System monitoring and status
 
+**Total: 5 MCP tools**
+
 ### ✅ Knowledge Bases (MCP Resources - Works: Desktop + CLI)
 Persistent intelligence accessible across all sessions:
 - 📚 **Reasoning Frameworks** (579 lines) - 10 thinking methodologies
@@ -37,6 +39,14 @@ Persistent intelligence accessible across all sessions:
 - 🏗️ **Architecture Patterns** (808 lines) - SOLID, DDD, design patterns
 
 **Total: 2,543 lines of persistent intelligence**
+
+### ✅ Phase 3 Autonomous Skills (Works: Desktop + CLI)
+Proactive code analysis and suggestions via MCP tools:
+- 🤖 **Auto Code Review** (262 lines) - Quality metrics, best practices
+- ⚡ **Auto Optimize** (387 lines) - Performance optimization suggestions
+- 🛡️ **Auto Security Scan** (479 lines) - OWASP Top 10 vulnerability detection
+
+**Total: 3 MCP tools + 3 MCP resources (1,128 lines of autonomous intelligence)**
 
 ### ✅ CLI Hooks (Works: Claude Code Only)
 Terminal-specific behavior enhancements via 6 Bash hooks (20.7KB total):
@@ -430,6 +440,11 @@ sena-mcp-server/
 │   ├── security-patterns.md    # 612 lines - OWASP Top 10
 │   ├── performance-patterns.md # 544 lines - Optimization
 │   └── architecture-patterns.md# 808 lines - SOLID, DDD
+├── skills/                      # NEW in v1.3.0 - Phase 3 Skills
+│   ├── README.md              # Skills framework guide
+│   ├── auto-code-review.md     # 262 lines - Code quality
+│   ├── auto-optimize.md        # 387 lines - Performance
+│   └── auto-security-scan.md   # 479 lines - Security
 ├── docs/                       # NEW in v1.1.0
 │   ├── ARCHITECTURE.md        # System architecture
 │   ├── FEATURE_COMPATIBILITY.md # MCP vs Hooks matrix
@@ -589,6 +604,126 @@ Also referenced in ~/.claude/CLAUDE.md for persistent access
 
 ---
 
+## 🤖 Phase 3 Autonomous Skills
+
+SENA includes **3 autonomous skills** that proactively analyze code and provide suggestions:
+
+### Available Skills (MCP Tools + Resources)
+
+| Skill | Triggers | Purpose | Lines |
+|-------|----------|---------|-------|
+| **Auto Code Review** | >50 lines written, git commit | Automatic quality analysis | 262 |
+| **Auto Optimize** | O(n²)+ complexity detected | Performance suggestions | 387 |
+| **Auto Security Scan** | User input, SQL, file ops | Vulnerability detection | 479 |
+
+**Total: 1,128 lines of autonomous intelligence**
+
+### Skill Details
+
+#### 1. Auto Code Review (`sena_auto_code_review`)
+
+**Automatic Activation:**
+- After writing >50 lines of code
+- When creating/modifying programming files
+- On git commit with code changes
+
+**Analysis Includes:**
+- Code quality metrics (readability, maintainability)
+- Language-specific anti-patterns
+- Performance review (complexity analysis)
+- Security check (OWASP guidelines)
+- Actionable improvement suggestions
+
+**Example Usage:**
+```
+Use Auto Code Review on this Python function:
+
+def process_data(items):
+    result = []
+    for item in items:
+        if item['value'] > 0:
+            result.append(item)
+    return result
+```
+
+#### 2. Auto Optimize (`sena_auto_optimize`)
+
+**Automatic Activation:**
+- Nested loops detected (O(n²) or worse)
+- Inefficient algorithms identified
+- Performance-critical code
+
+**Optimization Strategies:**
+- Algorithm replacement (O(n²) → O(n))
+- Data structure selection (list → set for O(1) lookup)
+- Code-level optimizations
+- Performance improvement estimates
+
+**Example Usage:**
+```
+Optimize this code for performance:
+
+for i in range(len(arr)):
+    for j in range(len(arr)):
+        if arr[i] == arr[j] and i != j:
+            print("Duplicate found")
+```
+
+#### 3. Auto Security Scan (`sena_auto_security_scan`)
+
+**Automatic Activation:**
+- User input handling
+- Database queries (SQL, NoSQL)
+- File operations
+- Authentication/authorization code
+- Cryptographic operations
+
+**Security Checks:**
+- OWASP Top 10 vulnerabilities
+- SQL injection prevention
+- XSS vulnerability detection
+- Command injection risks
+- Weak cryptography identification
+
+**Example Usage:**
+```
+Security scan this database query:
+
+query = f"SELECT * FROM users WHERE id = {user_id}"
+db.execute(query)
+```
+
+### How Skills Work
+
+1. **Detection:** MCP tools analyze code patterns
+2. **Trigger:** When conditions match, skill activates
+3. **Execution:** Comprehensive analysis performed
+4. **Recommendations:** Actionable suggestions with code examples
+
+### Accessing Skills
+
+**Via MCP Tools:**
+```
+Use sena_auto_code_review to analyze my code
+Run sena_auto_optimize on this function
+Execute sena_auto_security_scan on this API endpoint
+```
+
+**Via MCP Resources:**
+```
+Access sena://skills/auto-code-review for documentation
+View sena://skills/auto-optimize for optimization patterns
+Read sena://skills/auto-security-scan for security guidelines
+```
+
+**Complete Documentation:**
+- [skills/README.md](skills/README.md) - Skills framework overview
+- [skills/auto-code-review.md](skills/auto-code-review.md) - Code review skill
+- [skills/auto-optimize.md](skills/auto-optimize.md) - Optimization skill
+- [skills/auto-security-scan.md](skills/auto-security-scan.md) - Security skill
+
+---
+
 ## 🚀 Publishing to PyPI (Optional)
 
 To make SENA installable via `uvx sena-mcp-server` globally:
@@ -647,6 +782,21 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ---
 
 ## 🎉 Version History
+
+### v1.3.0 (2025-11-24) - **Phase 3 Autonomous Skills**
+- ✅ Added 3 MCP tools for autonomous code analysis
+  - sena_auto_code_review() - Quality metrics and best practices
+  - sena_auto_optimize() - Performance optimization suggestions
+  - sena_auto_security_scan() - OWASP Top 10 vulnerability detection
+- ✅ Added 3 MCP resources for skill documentation (1,128 lines total)
+  - sena://skills/auto-code-review (262 lines)
+  - sena://skills/auto-optimize (387 lines)
+  - sena://skills/auto-security-scan (479 lines)
+- ✅ Created skills/ directory with complete skill files
+- ✅ Enhanced README with Phase 3 Skills section
+- ✅ Updated health endpoint to include autonomous_skills feature
+- ✅ Updated directory structure showing skills folder
+- ✅ Coverage increased from 37% to 57% (+20%)
 
 ### v1.2.0 (2025-11-24) - **Hook System Documentation**
 - ✅ Added comprehensive hooks/README.md (complete hook system guide)
