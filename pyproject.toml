@@ -1,7 +1,7 @@
 [project]
 name = "sena-mcp-server"
-version = "1.1.0"
-description = "SENA Controller MCP Server - Intelligence tools + 2,543 lines of persistent knowledge bases for Claude"
+version = "1.2.0"
+description = "SENA Controller MCP Server - Intelligence tools + 2,543 lines of knowledge + Complete CLI hooks system"
 authors = [
     {name = "SENA Team", email = "sena@example.com"}
 ]

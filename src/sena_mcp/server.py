@@ -21,7 +21,7 @@ from mcp.server.fastmcp import FastMCP
 mcp = FastMCP("SENA")
 
 # SENA version
-VERSION = "1.1.0"
+VERSION = "1.2.0"
 
 
 @mcp.tool()

@@ -4,7 +4,7 @@
 
 [![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-blue)](https://modelcontextprotocol.io/)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-Hooks-green)](https://github.com/Sena1996/sena-mcp-server)
-[![Version](https://img.shields.io/badge/version-1.1.0-brightgreen)](https://github.com/Sena1996/sena-mcp-server)
+[![Version](https://img.shields.io/badge/version-1.2.0-brightgreen)](https://github.com/Sena1996/sena-mcp-server)
 
 ---
 
@@ -39,12 +39,15 @@ Persistent intelligence accessible across all sessions:
 **Total: 2,543 lines of persistent intelligence**
 
 ### ✅ CLI Hooks (Works: Claude Code Only)
-Terminal-specific behavior enhancements:
+Terminal-specific behavior enhancements via 6 Bash hooks (20.7KB total):
 - 🦁 **SENA Prefix** - Mandatory "SENA 🦁" branding on every response
 - 🎨 **Output Filtering** - Clean, beautiful terminal display
 - ⚡ **Auto-Triggers** - Automatic formatting for keywords (table, why, how)
 - 🔧 **Git Integration** - Clean commit messages (no AI credits)
 - 📊 **Progress Injection** - Auto-progress bars for multi-step tasks
+- 🔐 **Permission Control** - Dynamic tool permissions without restart
+
+**Detailed Documentation:** [hooks/README.md](hooks/README.md)
 
 ---
 
@@ -339,38 +342,52 @@ Show SENA health status
 
 ## 🔧 CLI Hooks Reference
 
-### Hook Scripts
+**Complete Hook System Documentation:** [hooks/README.md](hooks/README.md)
 
-| Hook | Purpose | Location |
-|------|---------|----------|
-| `user-prompt-submit.sh` | Enforces SENA prefix, detects keywords | Pre-processing |
-| `sena-enforcer.sh` | Validates output format | Post-processing |
-| `post-tool-use.sh` | Cleans tool execution display | After tool use |
-| `permission-request.sh` | Custom permission handling | Permission requests |
-| `conversation-progress.sh` | Progress tracking | During execution |
-| `auto-progress.sh` | Auto-progress injection | Multi-step tasks |
+### Hook Scripts (6 files, 20.7KB total)
 
-### Hook Triggers
+| Hook | Size | Purpose | Type |
+|------|------|---------|------|
+| **user-prompt-submit.sh** | 12.2KB | Enforces SENA prefix, detects keywords | Pre-Hook |
+| **sena-enforcer.sh** | 4.5KB | Validates output format compliance | Post-Hook |
+| **post-tool-use.sh** | 1.1KB | Suppresses verbose tool output | Post-Hook |
+| **permission-request.sh** | 1.7KB | Dynamic tool permissions control | Permission |
+| **conversation-progress.sh** | 0.7KB | Conversation-level progress bars | Progress |
+| **auto-progress.sh** | 0.6KB | Auto-progress injection | Progress |
 
-| User Input | Auto-Applied Format |
-|------------|---------------------|
-| "why", "how", "explain" | BRILLIANT THINKING format |
-| "table", "tabular" | UNICODE TABLE format |
-| "is X true", "fact check" | TRUTH VERIFICATION format |
-| "analyze code" | CODE ANALYSIS format |
-| Multiple operations | PROGRESS BARS |
+### Hook Triggers (Automatic Format Detection)
+
+| User Input | Auto-Applied Format | Hook |
+|------------|---------------------|------|
+| "why", "how", "explain" | BRILLIANT THINKING format | user-prompt-submit.sh |
+| "table", "tabular" | UNICODE TABLE format | user-prompt-submit.sh |
+| "is X true", "fact check" | TRUTH VERIFICATION format | user-prompt-submit.sh |
+| "analyze code" | CODE ANALYSIS format | user-prompt-submit.sh |
+| Multiple operations | PROGRESS BARS | user-prompt-submit.sh + sena-enforcer.sh |
 
 ### SENA Always-On Mode
 
 When `~/.claude/.sena_always_on` exists:
 - ✅ **EVERY response** must start with "SENA 🦁"
 - ✅ Applies to ALL requests (no exceptions)
-- ✅ Enforced by hooks automatically
+- ✅ Enforced by hooks automatically (pre + post validation)
+- ✅ Responses blocked if prefix missing
 
-To disable:
+**Enable:**
+```bash
+touch ~/.claude/.sena_always_on
+```
+
+**Disable:**
 ```bash
 rm ~/.claude/.sena_always_on
 ```
+
+**How It Works:**
+1. `user-prompt-submit.sh` injects reminder before Claude sees message
+2. `sena-enforcer.sh` validates response has prefix, blocks if missing
+
+See [hooks/README.md](hooks/README.md) for detailed configuration, troubleshooting, and testing.
 
 ---
 
@@ -418,13 +435,14 @@ sena-mcp-server/
 │   ├── FEATURE_COMPATIBILITY.md # MCP vs Hooks matrix
 │   ├── CLAUDE_CLI_RULES.md    # CLI rules documentation
 │   └── examples/              # Reference implementations
-├── hooks/
-│   ├── user-prompt-submit.sh   # Pre-processing hook
-│   ├── sena-enforcer.sh        # Post-validation hook
-│   ├── post-tool-use.sh        # Tool cleanup hook
-│   ├── permission-request.sh   # Permission handler
-│   ├── conversation-progress.sh # Progress tracking
-│   └── auto-progress.sh        # Auto-progress bars
+├── hooks/                       # NEW in v1.2.0 - Documented
+│   ├── README.md              # Complete hook system guide
+│   ├── user-prompt-submit.sh   # Pre-processing hook (12.2KB)
+│   ├── sena-enforcer.sh        # Post-validation hook (4.5KB)
+│   ├── post-tool-use.sh        # Tool cleanup hook (1.1KB)
+│   ├── permission-request.sh   # Permission handler (1.7KB)
+│   ├── conversation-progress.sh # Progress tracking (0.7KB)
+│   └── auto-progress.sh        # Auto-progress bars (0.6KB)
 ├── tests/
 │   └── test_server.py          # MCP server tests
 ├── install.sh                  # Automated installer
@@ -629,6 +647,18 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ---
 
 ## 🎉 Version History
+
+### v1.2.0 (2025-11-24) - **Hook System Documentation**
+- ✅ Added comprehensive hooks/README.md (complete hook system guide)
+- ✅ Documented all 6 hooks with examples and troubleshooting
+- ✅ Installation instructions for hook system
+- ✅ Configuration guide for SENA Always-On Mode
+- ✅ Testing procedures and validation steps
+- ✅ Hook architecture diagram and workflow
+- ✅ Security considerations and best practices
+- ✅ Enhanced main README with detailed hooks section
+- ✅ CLI-only features fully documented and accessible
+- ✅ Updated directory structure showing all hook files
 
 ### v1.1.0 (2025-11-24) - **Knowledge Integration**
 - ✅ Added 4 knowledge bases as MCP resources (2,543 lines total)
