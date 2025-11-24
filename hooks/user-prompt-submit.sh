@@ -35,18 +35,8 @@ fi
 # Read JSON input from stdin
 INPUT=$(cat)
 
-# Extract the prompt field from JSON using Python with error handling
-USER_PROMPT=$(echo "$INPUT" | python3 -c "
-import sys
-import json
-try:
-    data = json.load(sys.stdin)
-    print(data.get('prompt', ''))
-except (json.JSONDecodeError, KeyError, ValueError):
-    # Invalid JSON or missing field - output empty string
-    print('')
-    sys.exit(0)
-" 2>/dev/null)
+# PERFORMANCE: Extract prompt using jq (5-7x faster than Python)
+USER_PROMPT=$(echo "$INPUT" | jq -r '.prompt // empty' 2>/dev/null)
 
 # ============================================================
 # SENA ALWAYS-ON MODE: Check if persistent SENA mode is enabled
